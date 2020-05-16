@@ -35,7 +35,7 @@ class LoginQueryHandler implements QueryHandler
 
 
         $username = new Username($loginCommand->getUsername());
-        $hashedPassword = new Password($user->password()->value());
+        $hashedPassword = new Password($user->password());
         $plainPassword = new Password($loginCommand->getPassword());
 
 

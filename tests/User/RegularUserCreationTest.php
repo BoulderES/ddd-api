@@ -46,10 +46,15 @@ class RegularUserCreationTest extends KernelTestCase
         );
 
         try {
-            $this->tokenDecoder->decode($user->token()->value());
+            $tokenDecoded = $this->tokenDecoder->decode($user->token());
         } catch (\Exception $e) {
-            throw new AccessDeniedHttpException('This action needs a valid token! ' . $user->token()->value());
+            throw new AccessDeniedHttpException('This action needs a valid token! ' . $user->token());
         }
+
+//        var_export($tokenDecoded);
+        $this->assertEquals(false, $user->isLocked());
+        $this->assertEquals(true, $user->isMain());
+        $this->assertEquals(true, $user->isActive());
 
         $this->assertInstanceOf(User::class, $user);
 

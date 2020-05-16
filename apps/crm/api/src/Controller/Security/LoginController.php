@@ -30,7 +30,7 @@ class LoginController extends AbstractController
      */
     public function index(Request $request, SymfonyQueryBus $bus)
     {
-        // will cause the SmsNotificationHandler to be called
+
         $user = $bus->query(new LoginQuery(
                 $request->request->get("username"),
                 $request->request->get("password")

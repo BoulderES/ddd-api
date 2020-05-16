@@ -73,15 +73,6 @@ final class User extends AggregateRoot
         Username $username,
         Password $password,
         Email $email,
-//        Token $token,
-//        Roles $roles,
-//        FirstName $firstName,
-//        LastName $lastName,
-//        CommercialName $commercialName,
-//        TermsAccepted $termsAccepted,
-//        PhotoUrl $photoUrl,
-//        Latitude $latitude,
-//        Longitude $longitude,
         IsMain $isMain,
         IsActive $isActive,
         Locked $locked,
@@ -95,19 +86,6 @@ final class User extends AggregateRoot
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
-//        $this->roles = $roles;
-//        $this->token = $token;
-//        $this->firstName = $firstName;
-//        $this->lastName = $lastName;
-//        $this->commercialName = $commercialName;
-//        $this->termsAccepted = $termsAccepted;
-//        $this->photoUrl = $photoUrl;
-//        $this->latitude = $latitude;
-//        $this->longitude = $longitude;
-//        $this->isMain = $isMain;
-//        $this->isActive = $isActive;
-//        $this->locked = $locked;
-//        $this->order = $order;
     }
 
     public static function regularUserCreator(
@@ -161,26 +139,6 @@ final class User extends AggregateRoot
 
         return $user;
 
-//        return new User(
-//            $uuid,
-//            $company,
-//            $username,
-//            $password,
-//            $email,
-//            $token,
-//            $roles,
-//            new FirstName($firstName),
-//            new LastName($lastName),
-//            new CommercialName($commercialName),
-//            new TermsAccepted($termsAccepted),
-//            new PhotoUrl($photoUrl),
-//            new Latitude($latitude),
-//            new Longitude($longitude),
-//            new IsMain($isMain),
-//            new IsActive($isActive),
-//            new Locked($locked),
-//            new Order($order)
-//        );
     }
 
     public function update(
@@ -213,52 +171,67 @@ final class User extends AggregateRoot
 
     public function token()
     {
-        return $this->token;
+        return $this->token->value();
+    }
+
+    public function isActive()
+    {
+        return $this->isActive->value();
+    }
+
+    public function isMain()
+    {
+        return $this->isMain->value();
+    }
+
+    public function isLocked()
+    {
+        return $this->locked->value();
     }
 
     public function password()
     {
-        return $this->password;
+        return $this->password->value();
     }
 
     public function uuid()
     {
-        return $this->uuid;
+        return $this->uuid->value();
     }
 
     public function username()
     {
-        return $this->username;
+        return $this->username->value();
     }
 
     public function displayName()
     {
-        return $this->firstName . " " . $this->lastName;
+        return $this->firstName->value() . " " . $this->lastName->value();
     }
 
     public function firstname()
     {
-        return $this->firstName;
+        return $this->firstName->value();
     }
 
     public function lastname()
     {
-        return $this->lastName;
+        return $this->lastName->value();
     }
 
     public function email()
     {
-        return $this->email;
+        return $this->email->value();
     }
 
     public function photoUrl()
     {
-        return $this->photoUrl;
+        return $this->photoUrl->value();
     }
 
     public function roles()
     {
-        return $this->roles;
+        return $this->roles->value();
     }
 
 

@@ -43,7 +43,7 @@ class TokenValidationSubscriber implements EventSubscriberInterface
 
                 $token = $this->extractToken($request);
 
-                $user = $this->userRepository->userIdByToken($token->value());
+                $user = $this->userRepository->userIdByToken($token);
 
                 if (!$user)
                     throw new AccessDeniedHttpException('User related to the token not found!');
@@ -54,13 +54,13 @@ class TokenValidationSubscriber implements EventSubscriberInterface
 
     }
 
-    private function extractToken(Request $request): Token
+    private function extractToken(Request $request): string
     {
         $token = $this->tokenDecoder->decode(substr($request->headers->get('Authorization'), 7));
 
         $request->request->set('token', $token);
 
-        return $token;
+        return $token->value();
     }
 
 

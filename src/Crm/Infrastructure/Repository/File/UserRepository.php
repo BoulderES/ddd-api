@@ -14,7 +14,7 @@ class UserRepository implements UserRepositoryInterface
     {
 
         $objData = json_encode($obj);
-        $filePath = '/var/www/html/public/persistence/object'.$obj->uuid()->value().'.txt';
+        $filePath = '/var/www/html/public/persistence/object'.$obj->uuid().'.txt';
         $filesystem = new Filesystem();
         if($filesystem->exists($filePath)){
             $filesystem->remove($filePath);

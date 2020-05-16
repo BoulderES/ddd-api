@@ -34,7 +34,9 @@ class JWTCreatedListener
         // Add the client ip in the user token
         $payload       = $event->getData();
         $payload['uuid'] = $user->getUuid();
-        $payload['ip'] = $request->getClientIp();
+
+        if($request)
+            $payload['ip'] = $request->getClientIp();
 
         $event->setData($payload);
 
