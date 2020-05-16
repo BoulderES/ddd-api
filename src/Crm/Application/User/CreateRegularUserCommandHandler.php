@@ -8,6 +8,7 @@ use Cuadrik\Crm\Domain\Company\Company;
 use Cuadrik\Crm\Domain\Company\CompanyRepositoryInterface;
 use Cuadrik\Crm\Domain\Shared\Bus\Command\CommandHandler;
 use Cuadrik\Crm\Domain\Shared\ExceptionHandler;
+use Cuadrik\Crm\Domain\Shared\Service\ExceptionFactory\BadRequestException;
 use Cuadrik\Crm\Domain\Shared\Service\TokenEncoderInterface;
 use Cuadrik\Crm\Domain\Shared\Model\CompanyId;
 use Cuadrik\Crm\Domain\Shared\Model\IsMain;
@@ -47,7 +48,7 @@ final class CreateRegularUserCommandHandler implements CommandHandler
     {
 
         if("" === $createUserCommand->getPassword())
-            ExceptionHandler::throw('Password can not be empty.', get_called_class());
+            BadRequestException::throw('Password can not be empty. ' . get_called_class());
 
         $company = $this->companyRepository->findOneBy(['uuid.value' => $createUserCommand->getCompanyUuid()]);
 

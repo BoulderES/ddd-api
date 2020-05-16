@@ -7,11 +7,11 @@ namespace Cuadrik\Apps\Crm\Api\Controller\User;
 
 use Cuadrik\Crm\Application\User\GetUserQuery;
 use Cuadrik\Crm\Domain\Shared\ExceptionHandler;
+use Cuadrik\Crm\Domain\Shared\Service\ExceptionFactory\UnauthorizedException;
 use Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyQueryBus;
 use Cuadrik\Crm\Infrastructure\Symfony\Service\TokenAuthenticatedController;
 use Cuadrik\Crm\Infrastructure\View\SPA\UserMakeup;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ViewUserController extends AbstractController implements TokenAuthenticatedController
@@ -32,7 +32,7 @@ class ViewUserController extends AbstractController implements TokenAuthenticate
     public function viewUser(string $uuid, SymfonyQueryBus $bus)
     {
         if(!$user = $bus->query(new GetUserQuery($uuid)))
-            throw new AccessDeniedHttpException('User not found!');
+            UnauthorizedException::throw('This action needs a valid token! ');
 
         return $this->json(
             [

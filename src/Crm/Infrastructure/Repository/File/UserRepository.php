@@ -8,7 +8,7 @@ use Cuadrik\Crm\Domain\User\User;
 use Cuadrik\Crm\Domain\User\UserRepositoryInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository //implements UserRepositoryInterface
 {
     public function save(User $obj): void
     {

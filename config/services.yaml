@@ -33,6 +33,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
 
+    Cuadrik\Crm\Infrastructure\Symfony\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onException }
+
+
+
     # add json body in the request data
     Cuadrik\Crm\Infrastructure\Symfony\EventListener\AddJsonBodyToRequestListener:
         tags:

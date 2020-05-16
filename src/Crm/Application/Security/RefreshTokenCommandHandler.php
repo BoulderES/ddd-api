@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace Cuadrik\Crm\Application\Security;
 
 use Cuadrik\Crm\Domain\Shared\Bus\Command\CommandHandler;
-use Cuadrik\Crm\Domain\Shared\ExceptionHandler;
 use Cuadrik\Crm\Domain\Shared\Model\Token;
+use Cuadrik\Crm\Domain\Shared\Service\ExceptionFactory\UnauthorizedException;
 use Cuadrik\Crm\Domain\Shared\Service\TokenDecoderInterface;
 use Cuadrik\Crm\Domain\Shared\Service\TokenEncoderInterface;
 use Cuadrik\Crm\Domain\User\UserRepositoryInterface;
@@ -29,7 +29,7 @@ class RefreshTokenCommandHandler implements CommandHandler
     {
         $user = $this->userRepository->userByToken($refreshToken->getToken());
         if(!$user)
-            ExceptionHandler::throw('Unauthorized token.', get_called_class());
+            UnauthorizedException::throw('Unauthorized token. ' . get_called_class());
 
         $uuid = $user->uuid();
         $username = $user->username();

@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Cuadrik\Crm\Application\User;
 
 use Cuadrik\Crm\Domain\Shared\Bus\Query\QueryHandler;
-use Cuadrik\Crm\Domain\Shared\ExceptionHandler;
+use Cuadrik\Crm\Domain\Shared\Service\ExceptionFactory\BadRequestException;
 use Cuadrik\Crm\Domain\User\User;
 use Cuadrik\Crm\Domain\User\UserRepositoryInterface;
 
@@ -26,7 +26,7 @@ final class GetUserQueryHandler implements QueryHandler
         $user = $this->userRepository->userByUuid($getUserQuery->getUuid());
 
         if(!$user)
-            ExceptionHandler::throw('User not found!', get_called_class());
+            BadRequestException::throw('User not found! ' . get_called_class());
 
         return $user;
 

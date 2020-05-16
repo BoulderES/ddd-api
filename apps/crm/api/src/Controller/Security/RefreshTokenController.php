@@ -17,7 +17,7 @@ class RefreshTokenController extends AbstractController implements TokenAuthenti
 {
 
     /**
-     * @Route("/api/auth/validate-token", defaults={}, name="validation")
+     * @Route("/api/auth/refresh-token", defaults={}, name="validation")
      * @param Request $request
      * @param SymfonyCommandBus $bus
      * @return string the token validation return a new token with a fresh expiration date

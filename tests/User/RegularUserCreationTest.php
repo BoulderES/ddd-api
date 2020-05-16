@@ -5,9 +5,9 @@ namespace Cuadrik\Tests\User;
 use Cuadrik\Crm\Application\User\CreateRegularUserCommand;
 use Cuadrik\Crm\Domain\Shared\Model\CompanyId;
 use Cuadrik\Crm\Domain\Shared\Model\UserId;
+use Cuadrik\Crm\Domain\Shared\Service\ExceptionFactory\UnauthorizedException;
 use Cuadrik\Crm\Domain\User\User;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class RegularUserCreationTest extends KernelTestCase
 {
@@ -48,7 +48,7 @@ class RegularUserCreationTest extends KernelTestCase
         try {
             $tokenDecoded = $this->tokenDecoder->decode($user->token());
         } catch (\Exception $e) {
-            throw new AccessDeniedHttpException('This action needs a valid token! ' . $user->token());
+            UnauthorizedException::throw('This action needs a valid token! ' . $user->token());
         }
 
 //        var_export($tokenDecoded);

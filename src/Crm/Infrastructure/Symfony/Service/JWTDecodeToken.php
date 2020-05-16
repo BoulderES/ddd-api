@@ -6,9 +6,9 @@ namespace Cuadrik\Crm\Infrastructure\Symfony\Service;
 
 
 use Cuadrik\Crm\Domain\Shared\Model\Token;
+use Cuadrik\Crm\Domain\Shared\Service\ExceptionFactory\UnauthorizedException;
 use Cuadrik\Crm\Domain\Shared\Service\TokenDecoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 final class JWTDecodeToken implements TokenDecoderInterface
 {
@@ -27,8 +27,7 @@ final class JWTDecodeToken implements TokenDecoderInterface
             return new Token($token, $this->jwt_encoder->decode($token));
 
         } catch (\Exception $e) {
-
-            throw new AccessDeniedHttpException( $e->getMessage());
+            UnauthorizedException::throw('This action needs a valid token! ' . $e->getMessage());
         }
     }
 }

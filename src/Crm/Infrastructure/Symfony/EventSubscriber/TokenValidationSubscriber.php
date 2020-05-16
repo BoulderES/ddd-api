@@ -5,13 +5,13 @@ namespace Cuadrik\Crm\Infrastructure\Symfony\EventSubscriber;
 
 
 use Cuadrik\Crm\Domain\Shared\Model\Token;
+use Cuadrik\Crm\Domain\Shared\Service\ExceptionFactory\UnauthorizedException;
 use Cuadrik\Crm\Domain\Shared\Service\TokenDecoderInterface;
 use Cuadrik\Crm\Domain\User\UserRepositoryInterface;
 use Cuadrik\Crm\Infrastructure\Symfony\Service\TokenAuthenticatedController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class TokenValidationSubscriber implements EventSubscriberInterface
@@ -46,7 +46,7 @@ class TokenValidationSubscriber implements EventSubscriberInterface
                 $user = $this->userRepository->userIdByToken($token);
 
                 if (!$user)
-                    throw new AccessDeniedHttpException('User related to the token not found!');
+                    UnauthorizedException::throw('User related to the token not found!');
 
             }
 
@@ -66,8 +66,8 @@ class TokenValidationSubscriber implements EventSubscriberInterface
 
     private function needAuth(string $pathInfo): bool
     {
-        return false;
-//        return "/api/auth/" === substr( $pathInfo, 0, 10 );
+//        return false;
+        return "/api/auth/" === substr( $pathInfo, 0, 10 );
     }
 
     private function cleanTokenInjections($request)
