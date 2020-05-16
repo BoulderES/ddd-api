@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace Cuadrik\Crm\Domain\Company;
 
+use Cuadrik\Crm\Domain\Shared\Model\Locked;
 use Cuadrik\Crm\Domain\Shared\Aggregate\AggregateRoot;
 use Cuadrik\Crm\Domain\Shared\Model\CompanyId;
+use Cuadrik\Crm\Domain\Shared\Model\Description;
+use Cuadrik\Crm\Domain\Shared\Model\IsActive;
 use Cuadrik\Crm\Domain\Shared\Model\IsMain;
 use Cuadrik\Crm\Domain\Shared\Model\UserId;
 
@@ -17,25 +20,24 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Company extends AggregateRoot
 {
-    const MAIN_COMPANY_DESCRIPTION = "Main";
 
     private $users;
 
     private CompanyId $uuid;
 
-    private $invoiceNumeratorDebit;
+    private InvoiceNumeratorDebit $invoiceNumeratorDebit;
 
-    private $invoicePrefixNumeratorDebit;
+    private InvoiceNumeratorDebitPrefix $invoiceNumeratorDebitPrefix;
 
-    private $invoiceNumeratorCredit;
+    private InvoiceNumeratorCredit $invoiceNumeratorCredit;
 
-    private $invoicePrefixNumeratorCredit;
+    private InvoiceNumeratorCreditPrefix $invoiceNumeratorCreditPrefix;
 
-    private $numberOfPhones;
+    private NumberOfPhones $numberOfPhones;
 
-    private $numberOfAddresses;
+    private NumberOfAddresses $numberOfAddresses;
 
-    private $numberOfBankAccounts;
+    private NumberOfBankAccounts $numberOfBankAccounts;
 
     private Company $parent;
 
@@ -48,25 +50,39 @@ class Company extends AggregateRoot
 
     public function __construct(
         CompanyId $uuid,
-        IsMain $isMain,
-        $description = self::MAIN_COMPANY_DESCRIPTION,
+        IsMain $isMain = null,
+        IsActive $isActive = null,
+        Locked $locked = null,
+        Description $description = null,
         $parent = null
     )
     {
-        parent::__construct($isMain, );
+        if(!$isMain)
+            $isMain = new IsMain(true);
 
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        if(!$isActive)
+            $isActive = new IsActive(true);
+
+        if(!$locked)
+            $locked = new Locked(false);
+
+        if(!$description)
+            $description = new Description(Description::MAIN_COMPANY_DESCRIPTION);
+
+        parent::__construct($isMain, $isActive, $locked);
+
         $this->uuid = $uuid;
         $this->description = $description;
-//        $this->slug = Slugify::create($description);
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
 
-        $this->invoiceNumeratorDebit = 0;
-        $this->invoicePrefixNumeratorDebit = "CC";
-        $this->invoiceNumeratorCredit = 0;
-        $this->invoicePrefixNumeratorCredit = "AA";
-        $this->numberOfPhones = 1;
-        $this->numberOfAddresses = 1;
-        $this->numberOfBankAccounts = 1;
+
+        $this->invoiceNumeratorDebit = new InvoiceNumeratorDebit(0);
+        $this->invoiceNumeratorDebitPrefix = new InvoiceNumeratorDebitPrefix("CC");
+        $this->invoiceNumeratorCredit = new InvoiceNumeratorCredit(0);
+        $this->invoiceNumeratorCreditPrefix = new InvoiceNumeratorCreditPrefix("AA");
+        $this->numberOfPhones = new NumberOfPhones(1);
+        $this->numberOfAddresses = new NumberOfAddresses(1);
+        $this->numberOfBankAccounts = new NumberOfBankAccounts(1);
 //        $this->parent = $this;
     }
 
@@ -83,15 +99,15 @@ class Company extends AggregateRoot
 
     public function resetInvoiceNumerators()
     {
-        $this->invoiceNumeratorDebit = 0;
-        $this->invoiceNumeratorCredit = 0;
+        $this->invoiceNumeratorDebit = new InvoiceNumeratorDebit(0);
+        $this->invoiceNumeratorCredit = new InvoiceNumeratorCredit(0);
 
         return $this;
     }
 
     public function uuid()
     {
-        return $this->uuid;
+        return $this->uuid->value();
     }
 
 }

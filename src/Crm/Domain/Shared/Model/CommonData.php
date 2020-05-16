@@ -10,6 +10,8 @@ class CommonData
 {
     protected int $id;
 
+    protected Description $description;
+
     protected Locked $locked;
 
     protected IsMain $isMain;

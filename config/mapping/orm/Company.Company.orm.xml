@@ -7,6 +7,13 @@
         <embedded name="order" class="Cuadrik\Crm\Domain\Shared\Model\Order" use-column-prefix="false" />
         <embedded name="createdAt" class="Cuadrik\Crm\Domain\Shared\Model\CreatedAt" use-column-prefix="false" />
         <embedded name="updatedAt" class="Cuadrik\Crm\Domain\Shared\Model\UpdatedAt" use-column-prefix="false" />
+        <embedded name="numberOfPhones" class="Cuadrik\Crm\Domain\Company\NumberOfPhones" use-column-prefix="false" />
+        <embedded name="numberOfAddresses" class="Cuadrik\Crm\Domain\Company\NumberOfAddresses" use-column-prefix="false" />
+        <embedded name="numberOfBankAccounts" class="Cuadrik\Crm\Domain\Company\NumberOfBankAccounts" use-column-prefix="false" />
+        <embedded name="invoiceNumeratorDebit" class="Cuadrik\Crm\Domain\Company\InvoiceNumeratorDebit" use-column-prefix="false" />
+        <embedded name="invoiceNumeratorCredit" class="Cuadrik\Crm\Domain\Company\InvoiceNumeratorCredit" use-column-prefix="false" />
+        <embedded name="invoiceNumeratorDebitPrefix" class="Cuadrik\Crm\Domain\Company\InvoiceNumeratorDebitPrefix" use-column-prefix="false" />
+        <embedded name="invoiceNumeratorCreditPrefix" class="Cuadrik\Crm\Domain\Company\InvoiceNumeratorCreditPrefix" use-column-prefix="false" />
 
 
 <!--        <indexes>-->
