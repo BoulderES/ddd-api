@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Cuadrik\Crm\Domain\User\User" table="users">
+        <embedded name="locked" class="Cuadrik\Crm\Domain\Shared\Model\Locked" use-column-prefix="false" />
+        <embedded name="isMain" class="Cuadrik\Crm\Domain\Shared\Model\IsMain" use-column-prefix="false" />
+        <embedded name="isActive" class="Cuadrik\Crm\Domain\Shared\Model\IsActive" use-column-prefix="false" />
+        <embedded name="order" class="Cuadrik\Crm\Domain\Shared\Model\Order" use-column-prefix="false" />
+        <embedded name="createdAt" class="Cuadrik\Crm\Domain\Shared\Model\CreatedAt" use-column-prefix="false" />
+        <embedded name="updatedAt" class="Cuadrik\Crm\Domain\Shared\Model\UpdatedAt" use-column-prefix="false" />
+
+
+<!--        <indexes>-->
+<!--            <index name="username" columns="username"/>-->
+<!--            <index columns="email"/>-->
+<!--        </indexes>-->
+        <unique-constraints>
+            <unique-constraint columns="uuid,username,email" name="search_user_idx" />
+        </unique-constraints>
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+            <sequence-generator sequence-name="user_seq" allocation-size="1" initial-value="1" />
+        </id>
+        <embedded name="uuid" class="Cuadrik\Crm\Domain\Shared\Model\UserId" use-column-prefix="false" />
+        <embedded name="username" class="Username" use-column-prefix="false" />
+        <embedded name="email" class="Email" use-column-prefix="false" />
+        <embedded name="password" class="Password" use-column-prefix="false" />
+        <embedded name="token" class="Cuadrik\Crm\Domain\Shared\Model\Token" use-column-prefix="false" />
+        <embedded name="firstName" class="FirstName" use-column-prefix="false" />
+        <embedded name="lastName" class="LastName" use-column-prefix="false" />
+        <embedded name="commercialName" class="CommercialName" use-column-prefix="false" />
+        <embedded name="latitude" class="Latitude" use-column-prefix="false" />
+        <embedded name="longitude" class="Longitude" use-column-prefix="false" />
+        <embedded name="roles" class="Roles" use-column-prefix="false" />
+        <embedded name="termsAccepted" class="TermsAccepted" use-column-prefix="false" />
+        <embedded name="photoUrl" class="PhotoUrl" use-column-prefix="false" />
+
+        <many-to-one field="company" target-entity="Cuadrik\Crm\Domain\Company\Company" inversed-by="user">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-column name="company" referenced-column-name="id" />
+        </many-to-one>
+
+        <!--        <field name="name" column="name" type="string" length="50" nullable="true" unique="true" />-->
+        <!--        <field name="email" column="user_email" type="string" column-definition="CHAR(32) NOT NULL" />-->
+        <!--        <one-to-one field="address" target-entity="Address" inversed-by="user">-->
+        <!--            <cascade><cascade-remove /></cascade>-->
+        <!--            <join-column name="address_id" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>-->
+        <!--        </one-to-one>-->
+        <!--        <one-to-many field="phonenumbers" target-entity="Phonenumber" mapped-by="user">-->
+        <!--            <cascade>-->
+        <!--                <cascade-persist/>-->
+        <!--            </cascade>-->
+        <!--            <order-by>-->
+        <!--                <order-by-field name="number" direction="ASC" />-->
+        <!--            </order-by>-->
+        <!--        </one-to-many>-->
+        <!--        <many-to-many field="groups" target-entity="Group">-->
+        <!--            <cascade>-->
+        <!--                <cascade-all/>-->
+        <!--            </cascade>-->
+        <!--            <join-table name="cms_users_groups">-->
+        <!--                <join-columns>-->
+        <!--                    <join-column name="user_id" referenced-column-name="id" nullable="false" unique="false" />-->
+        <!--                </join-columns>-->
+        <!--                <inverse-join-columns>-->
+        <!--                    <join-column name="group_id" referenced-column-name="id" column-definition="INT NULL" />-->
+        <!--                </inverse-join-columns>-->
+        <!--            </join-table>-->
+        <!--        </many-to-many>-->
+
+
+
+    </entity>
+
+</doctrine-mapping>

@@ -1,0 +1,3 @@
+#index:
+#    path: /
+#    controller: Cuadrik\Controller\DefaultController::index

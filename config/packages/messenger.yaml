@@ -1,0 +1,34 @@
+framework:
+    messenger:
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
+        default_bus: command.bus
+        buses:
+            command.bus:
+                middleware:
+                    - validation
+#                    - doctrine_transaction
+            query.bus:
+                middleware:
+                    - validation
+            event.bus:
+                default_middleware: allow_no_handlers
+                middleware:
+                    - validation
+
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+#                serializer: messenger.transport.symfony_serializer
+            failed: 'doctrine://default?queue_name=failed'
+            sync:
+                dsn: 'sync://'
+#                serializer: messenger.transport.symfony_serializer
+
+        routing:
+            # Route your messages to the transports
+            # 'Cuadrik\Message\YourMessage': async
+            'Cuadrik\Crm\Domain\Shared\Bus\Command\Command': sync
+            'Cuadrik\Crm\Domain\Shared\Bus\Query\Query': sync
+#            'Cuadrik\Crm\Application\User\CreateRegularUserCommand': sync
