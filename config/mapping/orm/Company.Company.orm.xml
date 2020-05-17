@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <entity name="Cuadrik\Crm\Domain\Company\Company" table="companies">
-        <embedded name="locked" class="Cuadrik\Crm\Domain\Shared\Model\Locked" use-column-prefix="false" />
-        <embedded name="isMain" class="Cuadrik\Crm\Domain\Shared\Model\IsMain" use-column-prefix="false" />
-        <embedded name="isActive" class="Cuadrik\Crm\Domain\Shared\Model\IsActive" use-column-prefix="false" />
-        <embedded name="order" class="Cuadrik\Crm\Domain\Shared\Model\Order" use-column-prefix="false" />
-        <embedded name="createdAt" class="Cuadrik\Crm\Domain\Shared\Model\CreatedAt" use-column-prefix="false" />
-        <embedded name="updatedAt" class="Cuadrik\Crm\Domain\Shared\Model\UpdatedAt" use-column-prefix="false" />
+        <entity-listeners>
+            <entity-listener class="Company">
+                <lifecycle-callback type="preUpdate" method="preUpdateHandler"/>
+            </entity-listener>
+        </entity-listeners>
+
         <embedded name="numberOfPhones" class="Cuadrik\Crm\Domain\Company\NumberOfPhones" use-column-prefix="false" />
         <embedded name="numberOfAddresses" class="Cuadrik\Crm\Domain\Company\NumberOfAddresses" use-column-prefix="false" />
         <embedded name="numberOfBankAccounts" class="Cuadrik\Crm\Domain\Company\NumberOfBankAccounts" use-column-prefix="false" />
@@ -14,7 +14,6 @@
         <embedded name="invoiceNumeratorCredit" class="Cuadrik\Crm\Domain\Company\InvoiceNumeratorCredit" use-column-prefix="false" />
         <embedded name="invoiceNumeratorDebitPrefix" class="Cuadrik\Crm\Domain\Company\InvoiceNumeratorDebitPrefix" use-column-prefix="false" />
         <embedded name="invoiceNumeratorCreditPrefix" class="Cuadrik\Crm\Domain\Company\InvoiceNumeratorCreditPrefix" use-column-prefix="false" />
-
 
 <!--        <indexes>-->
 <!--            <index name="username" columns="username"/>-->

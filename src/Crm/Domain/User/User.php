@@ -145,17 +145,15 @@ final class User extends AggregateRoot
         Username $username,
         Password $password,
         Email $email,
+        PhotoUrl $photoUrl,
         FirstName $firstName,
-        LastName $lastName,
-        Roles $roles,
-        PhotoUrl $photoUrl
+        LastName $lastName
     )
     {
         $this->username = $username;
         $this->email = $email;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
-        $this->roles = $roles;
         $this->photoUrl = $photoUrl;
 
         if( "" !== $password )

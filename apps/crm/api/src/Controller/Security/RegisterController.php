@@ -35,7 +35,6 @@ class RegisterController extends AbstractController implements TokenAuthenticate
         $userUuid = Userid::random()->value();
         $companyUuid = CompanyId::random()->value();
 
-        // will cause the SmsNotificationHandler to be called
         $bus->dispatch(new CreateRegularUserCommand(
                 $userUuid,
                 $companyUuid,

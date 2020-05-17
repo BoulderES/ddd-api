@@ -15,9 +15,11 @@ class ExceptionListener
     public function onException(ExceptionEvent $event)
     {
         $exception = $event->getThrowable();
+
         if($exception instanceof HandlerFailedException){
             $exception = $exception->getNestedExceptions()[0];
         }
+
         $message = sprintf(
             'My Error says: %s with code: %s',
             $exception->getMessage(),
@@ -26,14 +28,8 @@ class ExceptionListener
 
         $response = new Response();
         $response->setContent($message);
-
-//        if ($exception instanceof HttpException) {
-
-            $response->setStatusCode($exception->getStatusCode());
-            $response->headers->replace($exception->getHeaders());
-//        } else {
-//            $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-//        }
+        $response->setStatusCode($exception->getStatusCode());
+        $response->headers->replace($exception->getHeaders());
 
         $event->setResponse($response);
     }

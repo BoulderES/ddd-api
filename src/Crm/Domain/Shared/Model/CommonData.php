@@ -26,6 +26,11 @@ class CommonData
 
     protected $children;
 
+    public function preUpdateHandler()
+    {
+        $this->updatedAt = new UpdatedAt(new \DateTime("now"));
+    }
+
     public function __construct(IsMain $isMain = null, IsActive $isActive = null, Locked $locked = null, Order $order = null)
     {
         if(!$isMain)

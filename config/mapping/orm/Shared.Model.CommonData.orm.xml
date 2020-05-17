@@ -1,0 +1,10 @@
+<doctrine-mapping>
+    <mapped-superclass name="Cuadrik\Crm\Domain\Shared\Model\CommonData">
+        <embedded name="locked" class="Cuadrik\Crm\Domain\Shared\Model\Locked" use-column-prefix="false" />
+        <embedded name="isMain" class="Cuadrik\Crm\Domain\Shared\Model\IsMain" use-column-prefix="false" />
+        <embedded name="isActive" class="Cuadrik\Crm\Domain\Shared\Model\IsActive" use-column-prefix="false" />
+        <embedded name="order" class="Cuadrik\Crm\Domain\Shared\Model\Order" use-column-prefix="false" />
+        <embedded name="createdAt" class="Cuadrik\Crm\Domain\Shared\Model\CreatedAt" use-column-prefix="false" />
+        <embedded name="updatedAt" class="Cuadrik\Crm\Domain\Shared\Model\UpdatedAt" use-column-prefix="false" />
+    </mapped-superclass>
+</doctrine-mapping>

@@ -14,8 +14,11 @@ use Cuadrik\Crm\Domain\Shared\Model\CompanyId;
 use Cuadrik\Crm\Domain\Shared\Model\IsMain;
 use Cuadrik\Crm\Domain\Shared\Model\UserId;
 use Cuadrik\Crm\Domain\User\Email;
+use Cuadrik\Crm\Domain\User\FirstName;
+use Cuadrik\Crm\Domain\User\LastName;
 use Cuadrik\Crm\Domain\User\Password;
 use Cuadrik\Crm\Domain\User\PasswordEncoder;
+use Cuadrik\Crm\Domain\User\PhotoUrl;
 use Cuadrik\Crm\Domain\User\Roles;
 use Cuadrik\Crm\Domain\Shared\Model\Token;
 use Cuadrik\Crm\Domain\User\User;
@@ -23,7 +26,7 @@ use Cuadrik\Crm\Domain\User\Username;
 use Cuadrik\Crm\Domain\User\UserRepositoryInterface;
 
 
-final class CreateRegularUserCommandHandler implements CommandHandler
+final class UpdateUserCommandHandler implements CommandHandler
 {
 
     private UserRepositoryInterface $userRepository;
@@ -44,42 +47,49 @@ final class CreateRegularUserCommandHandler implements CommandHandler
         $this->tokenEncoder = $tokenEncoder;
     }
 
-    public function __invoke(CreateRegularUserCommand $createUserCommand): void
+    public function __invoke(UpdateUserCommand $updateUserCommand): User
     {
+        $user = $this->userRepository->userByUuid($updateUserCommand->getUuid());
 
-        if("" === $createUserCommand->getPassword())
-            BadRequestException::throw('Password can not be empty. ' . get_called_class());
+        if(!$user)
+            BadRequestException::throw('User not found! ' . get_called_class());
 
-        $company = $this->companyRepository->findOneBy(['uuid.value' => $createUserCommand->getCompanyUuid()]);
 
-        if(null === $company) {
+        $uuid = new UserId($updateUserCommand->getUuid());
+        $username = new Username($updateUserCommand->getUsername());
+        $email = new Email($updateUserCommand->getEmail());
+        $photoUrl = new PhotoUrl($updateUserCommand->getPhotoUrl());
+        $firstName = new FirstName($updateUserCommand->getFirstName());
+        $lastName = new LastName($updateUserCommand->getLastName());
 
-            $company = Company::create(
-                new CompanyId($createUserCommand->getCompanyUuid()),
-                new IsMain(true)
-            );
 
-        }
+        $hashed_password = "";
+        if("" !== $updateUserCommand->getPassword())
+            $hashed_password = new Password( $this->passwordEncoder->encodePassword( $uuid, $username, new Password($updateUserCommand->getPassword()) ) );
 
-        $uuid = new UserId($createUserCommand->getUuid());
-        $username = new Username($createUserCommand->getUsername());
-        $email = new Email($createUserCommand->getEmail());
 
-        $hashed_password = new Password( $this->passwordEncoder->encodePassword( $uuid, $username, new Password($createUserCommand->getPassword()) ) );
-
-        $token = new Token( $this->tokenEncoder->encodeToken( $uuid, $username, new Password($createUserCommand->getPassword()), new Roles(Roles::REGULAR_USER_ROLE) ) );
-
-        $user = User::regularUserCreator(
-            $uuid,
-            $company,
+        $user = User::update(
             $username,
             $hashed_password,
             $email,
-            $token,
-            new Roles(Roles::REGULAR_USER_ROLE)
+            $photoUrl,
+            $firstName,
+            $lastName
         );
 
         $this->userRepository->save($user);
+
+        return $user;
+
+        //        $filesystem = new Filesystem();
+//        $filesystem->appendToFile('/var/www/html/public/logs/CreateRegularUserCommandHandler.log', '/var/www/html/logs/CreateRegularUserCommandHandler'.date("Y-m-d H:i:s")."\n".$hashed_password->value()."\n"."\n"."\n"."\n"."\n");
+
+//        $this->userRepository->save($user);
+
+//        return [
+//            'token' => $user->token(),
+//            'user' => UserMakeup::execute($user)
+//        ];
 
     }
 }
