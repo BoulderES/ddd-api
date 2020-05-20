@@ -6,7 +6,9 @@ namespace Cuadrik\Crm\Infrastructure\Symfony\Bus;
 
 use Cuadrik\Crm\Domain\Shared\Bus\Event\DomainEvent;
 use Cuadrik\Crm\Domain\Shared\Bus\Event\EventBus;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class SymfonyEventBus implements EventBus
 {
@@ -20,14 +22,19 @@ class SymfonyEventBus implements EventBus
 
     }
 
-    public function publish(DomainEvent ...$events): void
+    public function publish(DomainEvent $domainEvent): void
     {
+        $filesystem = new Filesystem();
+        $filesystem->appendToFile('/var/www/html/public/logs/SymfonyEventBus.log', '/var/www/html/logs/SymfonyEventBus'.date("Y-m-d H:i:s")."\n".date("Y-m-d H:i:s")."\n"."\n"."\n"."\n"."\n");
 
-        foreach ($events as $event) {
+        $this->eventBus->dispatch($domainEvent);
+//        $envelope = $this->eventBus->dispatch($domainEvent);
 
-            $this->eventBus->dispatch($event);
-
-        }
+//        $handledStamp = $envelope->last(HandledStamp::class);
+//        if(null !== $handledStamp)
+//            return $handledStamp->getResult();
+//
+//        return $envelope;
 
     }
 

@@ -2,22 +2,26 @@
 
 namespace Cuadrik\Tests\User;
 
+use Cuadrik\Crm\Application\Security\LoginQuery;
 use Cuadrik\Crm\Application\User\CreateRegularUserCommand;
 use Cuadrik\Crm\Domain\Shared\Model\CompanyId;
 use Cuadrik\Crm\Domain\Shared\Model\UserId;
-use Cuadrik\Crm\Domain\Shared\Service\ExceptionFactory\UnauthorizedException;
-use Cuadrik\Crm\Domain\User\User;
+
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Messenger\Transport\InMemoryTransport;
 
 class RegularUserCreationTest extends KernelTestCase
 {
-    private $bus;
+    private $commandBus;
+    private $queryBus;
     private $tokenDecoder;
 
     protected function setUp()
     {
         self::bootKernel();
-        $this->bus = self::$container->get('Cuadrik\Crm\Domain\Shared\Bus\Command\CommandBus');
+        $this->commandBus = self::$container->get('Cuadrik\Crm\Domain\Shared\Bus\Command\CommandBus');
+        $this->queryBus = self::$container->get('Cuadrik\Crm\Domain\Shared\Bus\Query\QueryBus');
+//        $this->bus = self::$container->get('Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyCommandBus.php');
         $this->tokenDecoder = self::$container->get('Cuadrik\Crm\Infrastructure\Symfony\Service\JWTDecodeToken');
     }
 
@@ -36,7 +40,7 @@ class RegularUserCreationTest extends KernelTestCase
         $email = "email$randomize@email.email";
         $photoUrl = "$randomize.jpg";
 
-        $this->bus->dispatch(new CreateRegularUserCommand(
+        $this->commandBus->dispatch(new CreateRegularUserCommand(
                 $uuid,
                 $companyUuid,
                 $username,
@@ -45,20 +49,37 @@ class RegularUserCreationTest extends KernelTestCase
                 $photoUrl
             )
         );
-//
-//        try {
-//            $tokenDecoded = $this->tokenDecoder->decode($user->token());
-//        } catch (\Exception $e) {
-//            UnauthorizedException::throw('This action needs a valid token! ' . $user->token());
-//        }
-//
-////        var_export($tokenDecoded);
-//        $this->assertEquals(false, $user->isLocked());
-//        $this->assertEquals(true, $user->isMain());
-//        $this->assertEquals(true, $user->isActive());
-//
-//        $this->assertInstanceOf(User::class, $user);
-//        $this->assertInstanceOf(User::class, $user);
+
+//        /* @var InMemoryTransport $transport */
+//        $transport = self::$container->get('messenger.transport.command');
+//        var_export($transport);
+
+
+
+
+
+
+
+//        $user = $this->queryBus->query(new LoginQuery(
+//                "admin",
+//                "admin"
+//            )
+//        );
+
+
+
+
+
+//        /* @var InMemoryTransport $transport */
+//        $transport = self::$container->get('messenger.transport.query');
+//        var_export(get_class_methods($transport->get()));
+//        var_export(json_encode($transport));
+
+        /* @var InMemoryTransport $transport */
+        $transport = self::$container->get('messenger.transport.command');
+//        var_export(get_class_methods($transport->get()));
+        $this->assertCount(1, $transport->get());
+//        dd($transport);
 
     }
 

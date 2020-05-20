@@ -12,13 +12,10 @@ use Cuadrik\Crm\Domain\Shared\Model\UserId;
 use Cuadrik\Crm\Domain\Shared\Model\IsMain;
 use Cuadrik\Crm\Domain\Shared\Model\Locked;
 use Cuadrik\Crm\Domain\Shared\Model\Order;
+use Cuadrik\Crm\Domain\Shared\Utils;
+use Cuadrik\Crm\Domain\Shared\Uuid;
+use DateTimeImmutable;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * @ORM\Entity
- * @ORM\Table(name="users")
- */
 final class User extends AggregateRoot
 {
     private UserId $uuid;
@@ -81,11 +78,11 @@ final class User extends AggregateRoot
     {
         parent::__construct($isMain, $isActive, $locked, $order);
 
-        $this->uuid = $uuid;
-        $this->company = $company;
+        $this->uuid     = $uuid;
+        $this->company  = $company;
         $this->username = $username;
         $this->password = $password;
-        $this->email = $email;
+        $this->email    = $email;
     }
 
     public static function regularUserCreator(
@@ -99,17 +96,17 @@ final class User extends AggregateRoot
     )
     {
         // TODO - modify to default values
-        $firstName = "";
-        $lastName = "";
+        $firstName      = "";
+        $lastName       = "";
         $commercialName = "";
-        $termsAccepted = true;
-        $photoUrl = "";
-        $latitude = "";
-        $longitude = "";
-        $isMain = true;
-        $isActive = true;
-        $locked = false;
-        $order = 1;
+        $termsAccepted  = true;
+        $photoUrl       = "";
+        $latitude       = "";
+        $longitude      = "";
+        $isMain         = true;
+        $isActive       = true;
+        $locked         = false;
+        $order          = 1;
 
         $user = new self(
             $uuid,
@@ -123,19 +120,25 @@ final class User extends AggregateRoot
             new Order($order)
         );
 
-        $user->token = $token;
-        $user->roles = $roles;
-        $user->firstName = new FirstName($firstName);
-        $user->lastName = new LastName($lastName);
-        $user->commercialName = new CommercialName($commercialName);
-        $user->termsAccepted = new TermsAccepted($termsAccepted);
-        $user->photoUrl = new PhotoUrl($photoUrl);
-        $user->latitude = new Latitude($latitude);
-        $user->longitude = new Longitude($longitude);
-        $user->isMain = new IsMain($isMain);
-        $user->isActive = new IsActive($isActive);
-        $user->locked = new Locked($locked);
-        $user->order = new Order($order);
+        $user->token            = $token;
+        $user->roles            = $roles;
+        $user->firstName        = new FirstName($firstName);
+        $user->lastName         = new LastName($lastName);
+        $user->commercialName   = new CommercialName($commercialName);
+        $user->termsAccepted    = new TermsAccepted($termsAccepted);
+        $user->photoUrl         = new PhotoUrl($photoUrl);
+        $user->latitude         = new Latitude($latitude);
+        $user->longitude        = new Longitude($longitude);
+        $user->isMain           = new IsMain($isMain);
+        $user->isActive         = new IsActive($isActive);
+        $user->locked           = new Locked($locked);
+        $user->order            = new Order($order);
+
+        $eventId = Uuid::random()->value();
+        $occurredOn = Utils::dateToString(new DateTimeImmutable());
+
+        $user->record(new UserCreatedDomainEvent($uuid->value(), $username->value(),$eventId,$occurredOn));
+
 
         return $user;
 
@@ -150,11 +153,11 @@ final class User extends AggregateRoot
         LastName $lastName
     )
     {
-        $this->username = $username;
-        $this->email = $email;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->photoUrl = $photoUrl;
+        $this->username     = $username;
+        $this->email        = $email;
+        $this->firstName    = $firstName;
+        $this->lastName     = $lastName;
+        $this->photoUrl     = $photoUrl;
 
         if( "" !== $password )
             $this->password = $password;

@@ -31,9 +31,9 @@
         <!-- ###- symfony/messenger ### -->
 
     </php>
-    <extensions>
-        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
-    </extensions>
+<!--    <extensions>-->
+<!--        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>-->
+<!--    </extensions>-->
 
     <testsuites>
         <testsuite name="Project Test Suite">

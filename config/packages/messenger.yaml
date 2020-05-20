@@ -7,7 +7,7 @@ framework:
             command.bus:
                 middleware:
                     - validation
-#                    - doctrine_transaction
+                    - doctrine_transaction
             query.bus:
                 middleware:
                     - validation
@@ -20,15 +20,37 @@ framework:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             async:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-#                serializer: messenger.transport.symfony_serializer
-            failed: 'doctrine://default?queue_name=failed'
+                #                serializer: messenger.transport.symfony_serializer
             sync:
                 dsn: 'sync://'
+                #                serializer: messenger.transport.symfony_serializer
+            command:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 #                serializer: messenger.transport.symfony_serializer
+            query:
+                dsn: 'sync://'
+#                serializer: messenger.transport.symfony_serializer
+            domainEvent:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+#                serializer: messenger.transport.symfony_serializer
+            failed: 'doctrine://default?queue_name=failed'
 
         routing:
             # Route your messages to the transports
             # 'Cuadrik\Message\YourMessage': async
-            'Cuadrik\Crm\Domain\Shared\Bus\Command\Command': sync
-            'Cuadrik\Crm\Domain\Shared\Bus\Query\Query': sync
-#            'Cuadrik\Crm\Application\User\CreateRegularUserCommand': sync
+            'Cuadrik\Crm\Domain\Shared\Bus\Command\Command': command
+            'Cuadrik\Crm\Domain\Shared\Bus\Query\Query': query
+            'Cuadrik\Crm\Domain\Shared\Bus\Event\DomainEvent': domainEvent
+
+
+
+
+
+# test/messenger.yaml content
+#
+#framework:
+#    messenger:
+#        transports:
+#            sync: 'in-memory://'
+#            async: 'in-memory://'
+#            async_priority_high: 'in-memory://'

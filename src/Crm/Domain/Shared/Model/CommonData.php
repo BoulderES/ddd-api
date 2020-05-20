@@ -34,23 +34,23 @@ class CommonData
     public function __construct(IsMain $isMain = null, IsActive $isActive = null, Locked $locked = null, Order $order = null)
     {
         if(!$isMain)
-            $isMain = new IsMain(true);
+            $isMain         = new IsMain(true);
 
         if(!$isActive)
-            $isActive = new IsActive(true);
+            $isActive       = new IsActive(true);
 
         if(!$locked)
-            $locked = new Locked(false);
+            $locked         = new Locked(false);
 
         if(!$order)
-            $order = new Order(1);
+            $order          = new Order(1);
 
-        $this->isMain = $isMain;
-        $this->isActive = $isActive;
-        $this->locked = $locked;
-        $this->order = $order;
-        $this->createdAt = new CreatedAt(new \DateTime("now"));
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isMain       = $isMain;
+        $this->isActive     = $isActive;
+        $this->locked       = $locked;
+        $this->order        = $order;
+        $this->createdAt    = new CreatedAt(new \DateTime("now"));
+        $this->children     = new \Doctrine\Common\Collections\ArrayCollection();
 
     }
 }

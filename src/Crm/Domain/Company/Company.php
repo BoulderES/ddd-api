@@ -14,10 +14,6 @@ use Cuadrik\Crm\Domain\Shared\Model\UserId;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="companies")
- */
 class Company extends AggregateRoot
 {
 
@@ -41,7 +37,7 @@ class Company extends AggregateRoot
 
     private Company $parent;
 
-    private UserId $userId;
+//    private UserId $userId;
 
     public function __toString()
     {
@@ -50,10 +46,10 @@ class Company extends AggregateRoot
 
     public function __construct(
         CompanyId $uuid,
-        IsMain $isMain = null,
+        Description $description,
+        IsMain $isMain,
         IsActive $isActive = null,
         Locked $locked = null,
-        Description $description = null,
         $parent = null
     )
     {
@@ -71,18 +67,18 @@ class Company extends AggregateRoot
 
         parent::__construct($isMain, $isActive, $locked);
 
-        $this->uuid = $uuid;
-        $this->description = $description;
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->uuid         = $uuid;
+        $this->description  = $description;
+        $this->users        = new \Doctrine\Common\Collections\ArrayCollection();
 
 
-        $this->invoiceNumeratorDebit = new InvoiceNumeratorDebit(0);
-        $this->invoiceNumeratorDebitPrefix = new InvoiceNumeratorDebitPrefix("CC");
-        $this->invoiceNumeratorCredit = new InvoiceNumeratorCredit(0);
+        $this->invoiceNumeratorDebit        = new InvoiceNumeratorDebit(0);
+        $this->invoiceNumeratorDebitPrefix  = new InvoiceNumeratorDebitPrefix("CC");
+        $this->invoiceNumeratorCredit       = new InvoiceNumeratorCredit(0);
         $this->invoiceNumeratorCreditPrefix = new InvoiceNumeratorCreditPrefix("AA");
-        $this->numberOfPhones = new NumberOfPhones(1);
-        $this->numberOfAddresses = new NumberOfAddresses(1);
-        $this->numberOfBankAccounts = new NumberOfBankAccounts(1);
+        $this->numberOfPhones               = new NumberOfPhones(1);
+        $this->numberOfAddresses            = new NumberOfAddresses(1);
+        $this->numberOfBankAccounts         = new NumberOfBankAccounts(1);
 //        $this->parent = $this;
     }
 
@@ -91,9 +87,9 @@ class Company extends AggregateRoot
         return $this->users;
     }
 
-    public static function create(CompanyId $companyId, IsMain $isMain)
+    public static function createMainCompany(CompanyId $companyId, Description $description, IsMain $isMain)
     {
-        return new self($companyId, $isMain);
+        return new self($companyId, $description, $isMain);
 
     }
 

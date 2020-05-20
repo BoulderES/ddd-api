@@ -35,6 +35,19 @@ class CompanyRepository extends ServiceEntityRepository implements CompanyReposi
 
     }
 
+    public function byUuid(string $uuid): ?Company
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.uuid.value = :uuid')
+            ->setParameter('uuid',$uuid)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $qb;
+
+    }
+
     public function findCompanyById(int $id): ?Company
     {
 

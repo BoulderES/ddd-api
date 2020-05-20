@@ -28,8 +28,14 @@ class ExceptionListener
 
         $response = new Response();
         $response->setContent($message);
-        $response->setStatusCode($exception->getStatusCode());
-        $response->headers->replace($exception->getHeaders());
+
+        if(
+            method_exists($exception, "getStatusCode")
+            && method_exists($exception, "getHeaders")
+        ){
+            $response->setStatusCode($exception->getStatusCode());
+            $response->headers->replace($exception->getHeaders());
+        }
 
         $event->setResponse($response);
     }

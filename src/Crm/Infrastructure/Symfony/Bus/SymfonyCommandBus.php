@@ -7,6 +7,7 @@ namespace Cuadrik\Crm\Infrastructure\Symfony\Bus;
 
 use Cuadrik\Crm\Domain\Shared\Bus\Command\Command;
 use Cuadrik\Crm\Domain\Shared\Bus\Command\CommandBus;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
@@ -22,16 +23,12 @@ class SymfonyCommandBus implements CommandBus
 
     }
 
-    public function dispatch(Command $command, array $stamps = [])
+    public function dispatch(Command $command, array $stamps = []): void
     {
+        $filesystem = new Filesystem();
+        $filesystem->appendToFile('/var/www/html/public/logs/SymfonyCommandBus.log', '/var/www/html/logs/MessageBusInterface'.date("Y-m-d H:i:s")."\n".date("Y-m-d H:i:s")."\n"."\n"."\n"."\n"."\n");
 
-        $envelope = $this->commandBus->dispatch($command);
-
-        $handledStamp = $envelope->last(HandledStamp::class);
-        if(null !== $handledStamp)
-            return $handledStamp->getResult();
-
-        return $envelope;
+        $this->commandBus->dispatch($command);
 
     }
 }
