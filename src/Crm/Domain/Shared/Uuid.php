@@ -46,4 +46,10 @@ class Uuid
     {
         return $this->value();
     }
+
+    public static function fromString(string $value): self
+    {
+        return new static($value);
+    }
+
 }

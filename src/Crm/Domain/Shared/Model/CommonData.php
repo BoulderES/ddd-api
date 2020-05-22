@@ -10,21 +10,21 @@ class CommonData
 {
     protected int $id;
 
-    protected string $description;
+    protected Description $description;
 
-    protected bool $isLocked;
+    protected Locked $locked;
 
-    protected bool $isMain;
+    protected IsMain $isMain;
 
-    protected bool $isActive;
+    protected IsActive $isActive;
 
-    protected int $order;
+    protected Order $order;
 
-    protected string $createdAt;
+    protected CreatedAt $createdAt;
 
-    protected string $updatedAt;
+    protected UpdatedAt $updatedAt;
 
-    protected string $children;
+    protected $children;
 
     public function preUpdateHandler()
     {
@@ -34,23 +34,23 @@ class CommonData
     public function __construct(IsMain $isMain = null, IsActive $isActive = null, IsLocked $isLocked= null, Order $order = null)
     {
         if(!$isMain)
-            $isMain     = new IsMain(true);
+            $isMain     = IsMain::fromBool(true);
 
         if(!$isActive)
-            $isActive   = new IsActive(true);
+            $isActive   = IsActive::fromBool(true);
 
         if(!$isLocked)
-            $isLocked   = new IsLocked(false);
+            $isLocked   = IsLocked::fromBool(false);
 
         if(!$order)
-            $order      = new Order(1);
+            $order      = Order::fromInt(1);
 
-        $this->isMain       = $isMain->value();
-        $this->isActive     = $isActive->value();
-        $this->isLocked       = $isLocked->value();
-        $this->order        = $order->value();
+        $this->isMain       = $isMain;
+        $this->isActive     = $isActive;
+        $this->isLocked       = $isLocked;
+        $this->order        = $order;
         $this->createdAt    = date(DateTimeInterface::ATOM);
-//        $this->children     = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children     = new \Doctrine\Common\Collections\ArrayCollection();
 
     }
 }

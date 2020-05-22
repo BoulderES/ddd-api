@@ -23,4 +23,9 @@ abstract class StringValueObject
     {
         return $this->value();
     }
+
+    public static function fromString(string $value): self
+    {
+        return new static($value);
+    }
 }

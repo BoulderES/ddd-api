@@ -24,12 +24,12 @@
         <embedded name="termsAccepted" class="TermsAccepted" use-column-prefix="false" />
         <embedded name="photoUrl" class="PhotoUrl" use-column-prefix="false" />
 
-<!--        <many-to-one field="companyId" target-entity="Cuadrik\Crm\Domain\Company\Company" inversed-by="user" >-->
-<!--            <cascade>-->
-<!--                <cascade-persist/>-->
-<!--            </cascade>-->
-<!--            <join-column name="companyId" referenced-column-name="id" />-->
-<!--        </many-to-one>-->
+        <many-to-one field="company" target-entity="Cuadrik\Crm\Domain\Company\Company" inversed-by="user">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-column name="company" referenced-column-name="id" />
+        </many-to-one>
 
         <!--        <unique-constraints>-->
         <!--            <unique-constraint columns="uuid,username,email" name="search_user_idx" />-->

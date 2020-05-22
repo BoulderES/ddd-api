@@ -19,8 +19,18 @@ abstract class BooleanValueObject
         return $this->value;
     }
 
+    public function asBool(): bool
+    {
+        return $this->value;
+    }
+
     public function __toString(): string
     {
         return (string)$this->value();
+    }
+
+    public static function fromBool(bool $value): self
+    {
+        return new static($value);
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Cuadrik\Crm\Domain\User;
 
+use Cuadrik\Crm\Domain\Company\Company;
 use Cuadrik\Crm\Domain\Shared\Aggregate\AggregateRoot;
-use Cuadrik\Crm\Domain\Shared\Model\CompanyId;
 use Cuadrik\Crm\Domain\Shared\Model\IsActive;
 use Cuadrik\Crm\Domain\Shared\Model\Token;
 use Cuadrik\Crm\Domain\Shared\Model\UserId;
@@ -18,40 +18,40 @@ use DateTimeImmutable;
 
 final class User extends AggregateRoot
 {
-    private string $uuid;
+    private UserId $uuid;
 
-    private Company $companyId;
+    private Company $company;
 
-    private string $parent;
+    private User $parent;
 
-    private string $username;
+    private Username $username;
 
-    private string $email;
+    private Email $email;
 
-    private string $password;
+    private Password $password;
 
-    private string $token;
+    private Token $token;
 
-    private string $firstName;
+    private FirstName $firstName;
 
-    private string $lastName;
+    private LastName $lastName;
 
-    private string $commercialName;
+    private CommercialName $commercialName;
 
-    private string $latitude;
+    private Latitude $latitude;
 
-    private string $longitude;
+    private Longitude $longitude;
 
-    private string $roles;
+    private Roles $roles;
 
-    private bool $termsAccepted;
+    private TermsAccepted $termsAccepted;
 
-    private string $photoUrl;
+    private PhotoUrl $photoUrl;
 
 
     public function __toString()
     {
-        return $this->uuid;
+        return $this->uuid->value();
     }
 //
 //    public function dummyUser($object)
@@ -66,7 +66,7 @@ final class User extends AggregateRoot
 
     public function __construct(
         UserId $uuid,
-        CompanyId $companyId,
+        Company $company,
         Username $username,
         Password $password,
         Email $email,
@@ -78,16 +78,16 @@ final class User extends AggregateRoot
     {
         parent::__construct($isMain, $isActive, $isLocked, $order);
 
-        $this->uuid     = $uuid->value();
-        $this->companyId  = $companyId->value();
-        $this->username = $username->value();
-        $this->password = $password->value();
-        $this->email    = $email->value();
+        $this->uuid     = $uuid;
+        $this->company  = $company;
+        $this->username = $username;
+        $this->password = $password;
+        $this->email    = $email;
     }
 
     public static function regularUserCreator(
         UserId $uuid,
-        CompanyId $companyId,
+        Company $company,
         Username $username,
         Password $password,
         Email $email,
@@ -110,7 +110,7 @@ final class User extends AggregateRoot
 
         $user = new self(
             $uuid,
-            $companyId,
+            $company,
             $username,
             $password,
             $email,
@@ -120,19 +120,19 @@ final class User extends AggregateRoot
             new Order($order)
         );
 
-        $user->token            = $token->value();
-        $user->roles            = $roles->value();
-        $user->firstName        = $firstName;
-        $user->lastName         = LastName::fromString($lastName)->value();
-        $user->commercialName   = CommercialName::fromString($commercialName)->value();
-        $user->termsAccepted    = TermsAccepted::fromBool($termsAccepted)->value();
-        $user->photoUrl         = PhotoUrl::fromString($photoUrl)->value();
-        $user->latitude         = Latitude::fromString($latitude)->value();
-        $user->longitude        = Longitude::fromString($longitude)->value();
-        $user->isMain           = IsMain::fromBool($isMain)->value();
-        $user->isActive         = IsActive::fromBool($isActive)->value();
-        $user->isLocked         = IsLocked::fromBool($isLocked)->value();
-        $user->order            = Order::fromInt($order)->value();
+        $user->token            = $token;
+        $user->roles            = $roles;
+        $user->firstName        = FirstName::fromString($firstName);
+        $user->lastName         = LastName::fromString($lastName);
+        $user->commercialName   = CommercialName::fromString($commercialName);
+        $user->termsAccepted    = TermsAccepted::fromBool($termsAccepted);
+        $user->photoUrl         = PhotoUrl::fromString($photoUrl);
+        $user->latitude         = Latitude::fromString($latitude);
+        $user->longitude        = Longitude::fromString($longitude);
+        $user->isMain           = IsMain::fromBool($isMain);
+        $user->isActive         = IsActive::fromBool($isActive);
+        $user->isLocked         = IsLocked::fromBool($isLocked);
+        $user->order            = Order::fromInt($order);
 
         $eventId = Uuid::random()->value();
         $occurredOn = Utils::dateToString(new DateTimeImmutable());
@@ -153,86 +153,86 @@ final class User extends AggregateRoot
         LastName $lastName
     )
     {
-        $this->username     = $username->value();
-        $this->email        = $email->value();
-        $this->firstName    = $firstName->value();
-        $this->lastName     = $lastName->value();
-        $this->photoUrl     = $photoUrl->value();
+        $this->username     = $username;
+        $this->email        = $email;
+        $this->firstName    = $firstName;
+        $this->lastName     = $lastName;
+        $this->photoUrl     = $photoUrl;
 
         if( "" !== $password )
-            $this->password = $password->value();
+            $this->password = $password;
     }
 
     public function refreshToken(Token $token)
     {
-        $this->token = $token->value();
+        $this->token = $token;
 
         return $this;
     }
 
     public function token()
     {
-        return Token::fromString($this->token);
+        return $this->token;
     }
 
     public function isActive()
     {
-        return IsActive::fromBool($this->isActive);
+        return $this->isActive->value();
     }
 
     public function isMain()
     {
-        return IsMain::fromBool($this->isMain);
+        return $this->isMain->value();
     }
 
     public function isLocked()
     {
-        return IsLocked::fromBool($this->isLocked);
+        return $this->isLocked->value();
     }
 
     public function password()
     {
-        return Password::fromString($this->password);
+        return $this->password->value();
     }
 
     public function uuid()
     {
-        return UserId::fromString($this->uuid);
+        return $this->uuid->value();
     }
 
     public function username()
     {
-        return Username::fromString($this->username);
+        return $this->username->value();
     }
 
     public function displayName()
     {
-        return $this->firstName . " " . $this->lastName;
+        return $this->firstName->value() . " " . $this->lastName->value();
     }
 
     public function firstname()
     {
-        return FirstName::fromString($this->firstName);
+        return $this->firstName->value();
     }
 
     public function lastname()
     {
-        return LastName::fromString($this->lastName);
+        return $this->lastName->value();
     }
 
     public function email()
     {
-        return Email::fromString($this->email);
+        return $this->email->value();
     }
 
     public function photoUrl()
     {
-        return PhotoUrl::fromString($this->photoUrl);
+        return $this->photoUrl->value();
     }
 
     public function roles()
     {
-        return Roles::fromString($this->roles);
+        return $this->roles->value();
     }
 
 

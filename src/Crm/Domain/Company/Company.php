@@ -19,29 +19,29 @@ class Company extends AggregateRoot
 
     private $users;
 
-    private string $uuid;
+    private CompanyId $uuid;
 
-    private int $invoiceNumeratorDebit;
+    private InvoiceNumeratorDebit $invoiceNumeratorDebit;
 
-    private string $invoiceNumeratorDebitPrefix;
+    private InvoiceNumeratorDebitPrefix $invoiceNumeratorDebitPrefix;
 
-    private int $invoiceNumeratorCredit;
+    private InvoiceNumeratorCredit $invoiceNumeratorCredit;
 
-    private string $invoiceNumeratorCreditPrefix;
+    private InvoiceNumeratorCreditPrefix $invoiceNumeratorCreditPrefix;
 
-    private int $numberOfPhones;
+    private NumberOfPhones $numberOfPhones;
 
-    private int $numberOfAddresses;
+    private NumberOfAddresses $numberOfAddresses;
 
-    private int $numberOfBankAccounts;
+    private NumberOfBankAccounts $numberOfBankAccounts;
 
-    private string $parent;
+    private Company $parent;
 
 //    private UserId $userId;
 
     public function __toString()
     {
-        return $this->uuid;
+        return $this->uuid->value();
     }
 
     public function __construct(
@@ -67,18 +67,18 @@ class Company extends AggregateRoot
 
         parent::__construct($isMain, $isActive, $isLocked);
 
-        $this->uuid         = $uuid->value();
-        $this->description  = $description->value();
+        $this->uuid         = $uuid;
+        $this->description  = $description;
         $this->users        = new \Doctrine\Common\Collections\ArrayCollection();
 
 
-        $this->invoiceNumeratorDebit        = 0;
-        $this->invoiceNumeratorDebitPrefix  = "CC";
-        $this->invoiceNumeratorCredit       = 0;
-        $this->invoiceNumeratorCreditPrefix = "AA";
-        $this->numberOfPhones               = 1;
-        $this->numberOfAddresses            = 1;
-        $this->numberOfBankAccounts         = 1;
+        $this->invoiceNumeratorDebit        = new InvoiceNumeratorDebit(0);
+        $this->invoiceNumeratorDebitPrefix  = new InvoiceNumeratorDebitPrefix("CC");
+        $this->invoiceNumeratorCredit       = new InvoiceNumeratorCredit(0);
+        $this->invoiceNumeratorCreditPrefix = new InvoiceNumeratorCreditPrefix("AA");
+        $this->numberOfPhones               = new NumberOfPhones(1);
+        $this->numberOfAddresses            = new NumberOfAddresses(1);
+        $this->numberOfBankAccounts         = new NumberOfBankAccounts(1);
 //        $this->parent = $this;
     }
 
@@ -95,15 +95,15 @@ class Company extends AggregateRoot
 
     public function resetInvoiceNumerators()
     {
-        $this->invoiceNumeratorDebit    = 0;
-        $this->invoiceNumeratorCredit   = 0;
+        $this->invoiceNumeratorDebit = new InvoiceNumeratorDebit(0);
+        $this->invoiceNumeratorCredit = new InvoiceNumeratorCredit(0);
 
         return $this;
     }
 
-    public function uuid()
+    public function uuidAsString()
     {
-        return $this->uuid;
+        return $this->uuid->value();
     }
 
 }

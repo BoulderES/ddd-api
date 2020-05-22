@@ -21,11 +21,6 @@ final class Token extends StringValueObject
         parent::__construct($token);
     }
 
-    public function value(): string
-    {
-        return $this->value;
-    }
-
     public function decoded(): array
     {
         return $this->decoded;
@@ -37,11 +32,6 @@ final class Token extends StringValueObject
             return $this->decoded["uuid"];
 
         return null;
-    }
-
-    public function __toString(): string
-    {
-        return $this->value();
     }
 
 }

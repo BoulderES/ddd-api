@@ -23,4 +23,9 @@ abstract class FloatValueObject
     {
         return (string)$this->value();
     }
+
+    public static function fromFloat(float $value): self
+    {
+        return new static($value);
+    }
 }

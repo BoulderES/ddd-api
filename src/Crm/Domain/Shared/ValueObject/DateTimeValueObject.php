@@ -5,22 +5,36 @@ declare(strict_types=1);
 namespace Cuadrik\Crm\Domain\Shared\ValueObject;
 
 
+use DateTimeImmutable;
+use DateTimeInterface;
+
 abstract class DateTimeValueObject
 {
-    protected \DateTime $value;
+    protected DateTimeImmutable $value;
 
-    public function __construct(\DateTime $value)
+    public function __construct(DateTimeImmutable $value)
     {
         $this->value = $value;
     }
 
-    public function value(): \DateTime
+    public function value(): DateTimeImmutable
     {
         return $this->value;
     }
 
     public function __toString(): string
     {
-        return $this->value()->format("Y-m-d H:i:s");
+        return $this->value()->format(DateTimeInterface::ATOM);
+    }
+
+    public function asString(): string
+    {
+        return $this->value()->format(DateTimeInterface::ATOM);
+    }
+
+
+    public static function fromString(string $value): self
+    {
+        return new static(DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $value));
     }
 }

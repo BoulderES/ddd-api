@@ -7,7 +7,7 @@ namespace Cuadrik\Crm\Domain\Shared\Model;
 
 use Cuadrik\Crm\Domain\Shared\ValueObject\BooleanValueObject;
 
-final class Locked extends BooleanValueObject
+final class IsLocked extends BooleanValueObject
 {
 
 }

@@ -23,4 +23,10 @@ abstract class IntValueObject
     {
         return (string)$this->value();
     }
+
+
+    public static function fromInt(int $value): self
+    {
+        return new static($value);
+    }
 }
