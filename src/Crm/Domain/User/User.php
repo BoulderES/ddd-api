@@ -4,13 +4,13 @@ declare(strict_types = 1);
 
 namespace Cuadrik\Crm\Domain\User;
 
-use Cuadrik\Crm\Domain\Company\Company;
 use Cuadrik\Crm\Domain\Shared\Aggregate\AggregateRoot;
+use Cuadrik\Crm\Domain\Shared\Model\CompanyId;
 use Cuadrik\Crm\Domain\Shared\Model\IsActive;
 use Cuadrik\Crm\Domain\Shared\Model\Token;
 use Cuadrik\Crm\Domain\Shared\Model\UserId;
 use Cuadrik\Crm\Domain\Shared\Model\IsMain;
-use Cuadrik\Crm\Domain\Shared\Model\Locked;
+use Cuadrik\Crm\Domain\Shared\Model\IsLocked;
 use Cuadrik\Crm\Domain\Shared\Model\Order;
 use Cuadrik\Crm\Domain\Shared\Utils;
 use Cuadrik\Crm\Domain\Shared\Uuid;
@@ -18,40 +18,40 @@ use DateTimeImmutable;
 
 final class User extends AggregateRoot
 {
-    private UserId $uuid;
+    private string $uuid;
 
-    private Company $company;
+    private Company $companyId;
 
-    private User $parent;
+    private string $parent;
 
-    private Username $username;
+    private string $username;
 
-    private Email $email;
+    private string $email;
 
-    private Password $password;
+    private string $password;
 
-    private Token $token;
+    private string $token;
 
-    private FirstName $firstName;
+    private string $firstName;
 
-    private LastName $lastName;
+    private string $lastName;
 
-    private CommercialName $commercialName;
+    private string $commercialName;
 
-    private Latitude $latitude;
+    private string $latitude;
 
-    private Longitude $longitude;
+    private string $longitude;
 
-    private Roles $roles;
+    private string $roles;
 
-    private TermsAccepted $termsAccepted;
+    private bool $termsAccepted;
 
-    private PhotoUrl $photoUrl;
+    private string $photoUrl;
 
 
     public function __toString()
     {
-        return $this->uuid->value();
+        return $this->uuid;
     }
 //
 //    public function dummyUser($object)
@@ -66,28 +66,28 @@ final class User extends AggregateRoot
 
     public function __construct(
         UserId $uuid,
-        Company $company,
+        CompanyId $companyId,
         Username $username,
         Password $password,
         Email $email,
         IsMain $isMain,
         IsActive $isActive,
-        Locked $locked,
+        IsLocked $isLocked,
         Order $order
     )
     {
-        parent::__construct($isMain, $isActive, $locked, $order);
+        parent::__construct($isMain, $isActive, $isLocked, $order);
 
-        $this->uuid     = $uuid;
-        $this->company  = $company;
-        $this->username = $username;
-        $this->password = $password;
-        $this->email    = $email;
+        $this->uuid     = $uuid->value();
+        $this->companyId  = $companyId->value();
+        $this->username = $username->value();
+        $this->password = $password->value();
+        $this->email    = $email->value();
     }
 
     public static function regularUserCreator(
         UserId $uuid,
-        Company $company,
+        CompanyId $companyId,
         Username $username,
         Password $password,
         Email $email,
@@ -105,34 +105,34 @@ final class User extends AggregateRoot
         $longitude      = "";
         $isMain         = true;
         $isActive       = true;
-        $locked         = false;
+        $isLocked       = false;
         $order          = 1;
 
         $user = new self(
             $uuid,
-            $company,
+            $companyId,
             $username,
             $password,
             $email,
             new IsMain($isMain),
             new IsActive($isActive),
-            new Locked($locked),
+            new IsLocked($isLocked),
             new Order($order)
         );
 
-        $user->token            = $token;
-        $user->roles            = $roles;
-        $user->firstName        = new FirstName($firstName);
-        $user->lastName         = new LastName($lastName);
-        $user->commercialName   = new CommercialName($commercialName);
-        $user->termsAccepted    = new TermsAccepted($termsAccepted);
-        $user->photoUrl         = new PhotoUrl($photoUrl);
-        $user->latitude         = new Latitude($latitude);
-        $user->longitude        = new Longitude($longitude);
-        $user->isMain           = new IsMain($isMain);
-        $user->isActive         = new IsActive($isActive);
-        $user->locked           = new Locked($locked);
-        $user->order            = new Order($order);
+        $user->token            = $token->value();
+        $user->roles            = $roles->value();
+        $user->firstName        = $firstName;
+        $user->lastName         = LastName::fromString($lastName)->value();
+        $user->commercialName   = CommercialName::fromString($commercialName)->value();
+        $user->termsAccepted    = TermsAccepted::fromBool($termsAccepted)->value();
+        $user->photoUrl         = PhotoUrl::fromString($photoUrl)->value();
+        $user->latitude         = Latitude::fromString($latitude)->value();
+        $user->longitude        = Longitude::fromString($longitude)->value();
+        $user->isMain           = IsMain::fromBool($isMain)->value();
+        $user->isActive         = IsActive::fromBool($isActive)->value();
+        $user->isLocked         = IsLocked::fromBool($isLocked)->value();
+        $user->order            = Order::fromInt($order)->value();
 
         $eventId = Uuid::random()->value();
         $occurredOn = Utils::dateToString(new DateTimeImmutable());
@@ -153,86 +153,86 @@ final class User extends AggregateRoot
         LastName $lastName
     )
     {
-        $this->username     = $username;
-        $this->email        = $email;
-        $this->firstName    = $firstName;
-        $this->lastName     = $lastName;
-        $this->photoUrl     = $photoUrl;
+        $this->username     = $username->value();
+        $this->email        = $email->value();
+        $this->firstName    = $firstName->value();
+        $this->lastName     = $lastName->value();
+        $this->photoUrl     = $photoUrl->value();
 
         if( "" !== $password )
-            $this->password = $password;
+            $this->password = $password->value();
     }
 
     public function refreshToken(Token $token)
     {
-        $this->token = $token;
+        $this->token = $token->value();
 
         return $this;
     }
 
     public function token()
     {
-        return $this->token->value();
+        return Token::fromString($this->token);
     }
 
     public function isActive()
     {
-        return $this->isActive->value();
+        return IsActive::fromBool($this->isActive);
     }
 
     public function isMain()
     {
-        return $this->isMain->value();
+        return IsMain::fromBool($this->isMain);
     }
 
     public function isLocked()
     {
-        return $this->locked->value();
+        return IsLocked::fromBool($this->isLocked);
     }
 
     public function password()
     {
-        return $this->password->value();
+        return Password::fromString($this->password);
     }
 
     public function uuid()
     {
-        return $this->uuid->value();
+        return UserId::fromString($this->uuid);
     }
 
     public function username()
     {
-        return $this->username->value();
+        return Username::fromString($this->username);
     }
 
     public function displayName()
     {
-        return $this->firstName->value() . " " . $this->lastName->value();
+        return $this->firstName . " " . $this->lastName;
     }
 
     public function firstname()
     {
-        return $this->firstName->value();
+        return FirstName::fromString($this->firstName);
     }
 
     public function lastname()
     {
-        return $this->lastName->value();
+        return LastName::fromString($this->lastName);
     }
 
     public function email()
     {
-        return $this->email->value();
+        return Email::fromString($this->email);
     }
 
     public function photoUrl()
     {
-        return $this->photoUrl->value();
+        return PhotoUrl::fromString($this->photoUrl);
     }
 
     public function roles()
     {
-        return $this->roles->value();
+        return Roles::fromString($this->roles);
     }
 
 

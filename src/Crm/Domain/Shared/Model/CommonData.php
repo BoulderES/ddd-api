@@ -4,53 +4,53 @@ declare(strict_types = 1);
 
 namespace Cuadrik\Crm\Domain\Shared\Model;
 
-use Cuadrik\Crm\Domain\Shared\Model\Locked;
+use DateTimeInterface;
 
 class CommonData
 {
     protected int $id;
 
-    protected Description $description;
+    protected string $description;
 
-    protected Locked $locked;
+    protected bool $isLocked;
 
-    protected IsMain $isMain;
+    protected bool $isMain;
 
-    protected IsActive $isActive;
+    protected bool $isActive;
 
-    protected Order $order;
+    protected int $order;
 
-    protected CreatedAt $createdAt;
+    protected string $createdAt;
 
-    protected UpdatedAt $updatedAt;
+    protected string $updatedAt;
 
-    protected $children;
+    protected string $children;
 
     public function preUpdateHandler()
     {
-        $this->updatedAt = new UpdatedAt(new \DateTime("now"));
+        $this->updatedAt = date(DateTimeInterface::ATOM);
     }
 
-    public function __construct(IsMain $isMain = null, IsActive $isActive = null, Locked $locked = null, Order $order = null)
+    public function __construct(IsMain $isMain = null, IsActive $isActive = null, IsLocked $isLocked= null, Order $order = null)
     {
         if(!$isMain)
-            $isMain         = new IsMain(true);
+            $isMain     = new IsMain(true);
 
         if(!$isActive)
-            $isActive       = new IsActive(true);
+            $isActive   = new IsActive(true);
 
-        if(!$locked)
-            $locked         = new Locked(false);
+        if(!$isLocked)
+            $isLocked   = new IsLocked(false);
 
         if(!$order)
-            $order          = new Order(1);
+            $order      = new Order(1);
 
-        $this->isMain       = $isMain;
-        $this->isActive     = $isActive;
-        $this->locked       = $locked;
-        $this->order        = $order;
-        $this->createdAt    = new CreatedAt(new \DateTime("now"));
-        $this->children     = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isMain       = $isMain->value();
+        $this->isActive     = $isActive->value();
+        $this->isLocked       = $isLocked->value();
+        $this->order        = $order->value();
+        $this->createdAt    = date(DateTimeInterface::ATOM);
+//        $this->children     = new \Doctrine\Common\Collections\ArrayCollection();
 
     }
 }

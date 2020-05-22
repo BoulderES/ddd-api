@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Cuadrik\Crm\Domain\Company;
 
-use Cuadrik\Crm\Domain\Shared\Model\Locked;
+use Cuadrik\Crm\Domain\Shared\Model\IsLocked;
 use Cuadrik\Crm\Domain\Shared\Aggregate\AggregateRoot;
 use Cuadrik\Crm\Domain\Shared\Model\CompanyId;
 use Cuadrik\Crm\Domain\Shared\Model\Description;
@@ -19,66 +19,66 @@ class Company extends AggregateRoot
 
     private $users;
 
-    private CompanyId $uuid;
+    private string $uuid;
 
-    private InvoiceNumeratorDebit $invoiceNumeratorDebit;
+    private int $invoiceNumeratorDebit;
 
-    private InvoiceNumeratorDebitPrefix $invoiceNumeratorDebitPrefix;
+    private string $invoiceNumeratorDebitPrefix;
 
-    private InvoiceNumeratorCredit $invoiceNumeratorCredit;
+    private int $invoiceNumeratorCredit;
 
-    private InvoiceNumeratorCreditPrefix $invoiceNumeratorCreditPrefix;
+    private string $invoiceNumeratorCreditPrefix;
 
-    private NumberOfPhones $numberOfPhones;
+    private int $numberOfPhones;
 
-    private NumberOfAddresses $numberOfAddresses;
+    private int $numberOfAddresses;
 
-    private NumberOfBankAccounts $numberOfBankAccounts;
+    private int $numberOfBankAccounts;
 
-    private Company $parent;
+    private string $parent;
 
 //    private UserId $userId;
 
     public function __toString()
     {
-        return $this->uuid->value();
+        return $this->uuid;
     }
 
     public function __construct(
         CompanyId $uuid,
         Description $description,
-        IsMain $isMain,
+        IsMain $isMain = null,
         IsActive $isActive = null,
-        Locked $locked = null,
+        IsLocked $isLocked = null,
         $parent = null
     )
     {
         if(!$isMain)
-            $isMain = new IsMain(true);
+            $isMain = IsMain::fromBool(true);
 
         if(!$isActive)
-            $isActive = new IsActive(true);
+            $isActive = IsActive::fromBool(true);
 
-        if(!$locked)
-            $locked = new Locked(false);
+        if(!$isLocked)
+            $isLocked = IsLocked::fromBool(false);
 
         if(!$description)
-            $description = new Description(Description::MAIN_COMPANY_DESCRIPTION);
+            $description = Description::fromString(Description::MAIN_COMPANY_DESCRIPTION);
 
-        parent::__construct($isMain, $isActive, $locked);
+        parent::__construct($isMain, $isActive, $isLocked);
 
-        $this->uuid         = $uuid;
-        $this->description  = $description;
+        $this->uuid         = $uuid->value();
+        $this->description  = $description->value();
         $this->users        = new \Doctrine\Common\Collections\ArrayCollection();
 
 
-        $this->invoiceNumeratorDebit        = new InvoiceNumeratorDebit(0);
-        $this->invoiceNumeratorDebitPrefix  = new InvoiceNumeratorDebitPrefix("CC");
-        $this->invoiceNumeratorCredit       = new InvoiceNumeratorCredit(0);
-        $this->invoiceNumeratorCreditPrefix = new InvoiceNumeratorCreditPrefix("AA");
-        $this->numberOfPhones               = new NumberOfPhones(1);
-        $this->numberOfAddresses            = new NumberOfAddresses(1);
-        $this->numberOfBankAccounts         = new NumberOfBankAccounts(1);
+        $this->invoiceNumeratorDebit        = 0;
+        $this->invoiceNumeratorDebitPrefix  = "CC";
+        $this->invoiceNumeratorCredit       = 0;
+        $this->invoiceNumeratorCreditPrefix = "AA";
+        $this->numberOfPhones               = 1;
+        $this->numberOfAddresses            = 1;
+        $this->numberOfBankAccounts         = 1;
 //        $this->parent = $this;
     }
 
@@ -95,15 +95,15 @@ class Company extends AggregateRoot
 
     public function resetInvoiceNumerators()
     {
-        $this->invoiceNumeratorDebit = new InvoiceNumeratorDebit(0);
-        $this->invoiceNumeratorCredit = new InvoiceNumeratorCredit(0);
+        $this->invoiceNumeratorDebit    = 0;
+        $this->invoiceNumeratorCredit   = 0;
 
         return $this;
     }
 
     public function uuid()
     {
-        return $this->uuid->value();
+        return $this->uuid;
     }
 
 }
