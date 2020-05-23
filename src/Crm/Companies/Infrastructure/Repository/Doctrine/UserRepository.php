@@ -23,10 +23,10 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         parent::__construct($registry, User::class);
     }
 
-    public function findUserById(int $id): ?User
-    {
-
-    }
+//    public function findUserById(int $id): ?User
+//    {
+//
+//    }
 
     public function userIdByToken(string $token): ?array
     {
@@ -58,7 +58,7 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     public function userByUuid(string $uuid): ?User
     {
         $qb = $this->createQueryBuilder('u')
-            ->where('u.uuid.value = :uuid')
+            ->where('u.uuid = :uuid')
             ->setParameter('uuid',$uuid)
             ->getQuery()
             ->getOneOrNullResult()

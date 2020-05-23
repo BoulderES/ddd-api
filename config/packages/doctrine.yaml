@@ -10,11 +10,19 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            Cuadrik:
+            Companies:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/config/mapping/orm'
+                dir: '%kernel.project_dir%/config/mapping/orm/companies'
 #                type: annotation
-#                dir: '%kernel.project_dir%/src/Crm/Domain'
+#                dir: '%kernel.project_dir%/src/Crm/Companies/Domain'
                 prefix: 'Cuadrik\Crm\Companies\Domain'
-                alias: Cuadrik
+                alias: Companies
+            Shared:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/config/mapping/orm/shared'
+#                type: annotation
+#                dir: '%kernel.project_dir%/src/Crm/Shared/Domain'
+                prefix: 'Cuadrik\Crm\Shared\Domain'
+                alias: Shared

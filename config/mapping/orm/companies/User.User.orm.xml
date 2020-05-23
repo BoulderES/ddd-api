@@ -10,7 +10,6 @@
             </entity-listener>
         </entity-listeners>
 
-<!--        <embedded name="uuid" class="Cuadrik\Crm\Shared\Domain\Model\UserId" use-column-prefix="false" />-->
         <embedded name="username" class="Username" use-column-prefix="false" />
         <embedded name="email" class="Email" use-column-prefix="false" />
         <embedded name="password" class="Password" use-column-prefix="false" />
@@ -28,17 +27,17 @@
             <cascade>
                 <cascade-persist/>
             </cascade>
-            <join-column name="company" referenced-column-name="id" />
+            <join-column name="company" referenced-column-name="uuid" />
         </many-to-one>
 
-        <!--        <unique-constraints>-->
-        <!--            <unique-constraint columns="uuid,username,email" name="search_user_idx" />-->
-        <!--        </unique-constraints>-->
+<!--        <unique-constraints>-->
+<!--            <unique-constraint columns="uuid,username,email" name="search_user_idx" />-->
+<!--        </unique-constraints>-->
+<!--        <indexes>-->
+<!--            <index name="uuid" columns="uuid"/>-->
+<!--            <index columns="email"/>-->
+<!--        </indexes>-->
 
-                <indexes>
-                    <index name="uuid" columns="uuid"/>
-                    <index columns="email"/>
-                </indexes>
 
 
     </entity>

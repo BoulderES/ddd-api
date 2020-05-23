@@ -8,11 +8,9 @@ use DateTimeInterface;
 
 class CommonData
 {
-    protected int $id;
-
     protected Description $description;
 
-    protected Locked $locked;
+    protected IsLocked $isLocked;
 
     protected IsMain $isMain;
 
@@ -28,7 +26,7 @@ class CommonData
 
     public function preUpdateHandler()
     {
-        $this->updatedAt = date(DateTimeInterface::ATOM);
+        $this->updatedAt = UpdatedAt::fromString(date(DateTimeInterface::ATOM));
     }
 
     public function __construct(IsMain $isMain = null, IsActive $isActive = null, IsLocked $isLocked= null, Order $order = null)
@@ -47,9 +45,9 @@ class CommonData
 
         $this->isMain       = $isMain;
         $this->isActive     = $isActive;
-        $this->isLocked       = $isLocked;
+        $this->isLocked     = $isLocked;
         $this->order        = $order;
-        $this->createdAt    = date(DateTimeInterface::ATOM);
+        $this->createdAt    = CreatedAt::fromString(date(DateTimeInterface::ATOM));
         $this->children     = new \Doctrine\Common\Collections\ArrayCollection();
 
     }

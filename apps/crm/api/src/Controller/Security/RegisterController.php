@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RegisterController extends AbstractController implements TokenAuthenticatedController
+class RegisterController extends AbstractController
 {
 
     /**

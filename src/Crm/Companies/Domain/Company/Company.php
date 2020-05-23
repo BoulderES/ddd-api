@@ -19,7 +19,7 @@ class Company extends AggregateRoot
 
     private $users;
 
-    private CompanyId $uuid;
+    private string $uuid;
 
     private InvoiceNumeratorDebit $invoiceNumeratorDebit;
 
@@ -41,7 +41,7 @@ class Company extends AggregateRoot
 
     public function __toString()
     {
-        return $this->uuid->value();
+        return $this->uuid;
     }
 
     public function __construct(
@@ -67,7 +67,7 @@ class Company extends AggregateRoot
 
         parent::__construct($isMain, $isActive, $isLocked);
 
-        $this->uuid         = $uuid;
+        $this->uuid         = $uuid->value();
         $this->description  = $description;
         $this->users        = new \Doctrine\Common\Collections\ArrayCollection();
 
@@ -101,9 +101,9 @@ class Company extends AggregateRoot
         return $this;
     }
 
-    public function uuidAsString()
+    public function uuid()
     {
-        return $this->uuid->value();
+        return $this->uuid;
     }
 
 }

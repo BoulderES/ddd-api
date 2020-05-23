@@ -18,7 +18,7 @@ use DateTimeImmutable;
 
 final class User extends AggregateRoot
 {
-    private UserId $uuid;
+    private string $uuid;
 
     private Company $company;
 
@@ -51,7 +51,7 @@ final class User extends AggregateRoot
 
     public function __toString()
     {
-        return $this->uuid->value();
+        return $this->uuid;
     }
 //
 //    public function dummyUser($object)
@@ -78,7 +78,7 @@ final class User extends AggregateRoot
     {
         parent::__construct($isMain, $isActive, $isLocked, $order);
 
-        $this->uuid     = $uuid;
+        $this->uuid     = $uuid->value();
         $this->company  = $company;
         $this->username = $username;
         $this->password = $password;
@@ -196,7 +196,7 @@ final class User extends AggregateRoot
 
     public function uuid()
     {
-        return $this->uuid->value();
+        return $this->uuid;
     }
 
     public function username()

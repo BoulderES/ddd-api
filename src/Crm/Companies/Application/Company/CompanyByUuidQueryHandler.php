@@ -21,7 +21,7 @@ class CompanyByUuidQueryHandler implements QueryHandler
 
     public function __invoke(CompanyByUuidQuery $companyByUuidQuery)
     {
-        $company = $this->companyRepository->findOneBy(['uuid.value' => $companyByUuidQuery->getUuid()]);
+        $company = $this->companyRepository->findOneBy(['uuid' => $companyByUuidQuery->getUuid()]);
 
         if(!$company)
             ExceptionManager::throw('User not found! ' . get_called_class());

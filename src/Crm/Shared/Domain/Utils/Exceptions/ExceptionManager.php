@@ -40,6 +40,6 @@ class ExceptionManager extends \RuntimeException implements HttpExceptionInterfa
 
     public static function throw(string $message, int $code=400)
     {
-        return new self($code, $message);
+        throw new self($code, $message);
     }
 }

@@ -1,0 +1,10 @@
+# test/messenger.yaml content
+#
+#framework:
+#    messenger:
+#        transports:
+#            sync: 'in-memory://'
+#            async: 'in-memory://'
+#            command: 'in-memory://'
+#            query: 'in-memory://'
+#            domainEvent: 'in-memory://'
