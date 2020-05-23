@@ -2,10 +2,10 @@
 
 namespace Cuadrik\Tests\User;
 
-use Cuadrik\Crm\Application\Security\LoginQuery;
-use Cuadrik\Crm\Application\User\CreateRegularUserCommand;
-use Cuadrik\Crm\Domain\Shared\Model\CompanyId;
-use Cuadrik\Crm\Domain\Shared\Model\UserId;
+use Cuadrik\Crm\Companies\Application\Security\LoginQuery;
+use Cuadrik\Crm\Companies\Application\User\CreateRegularUserCommand;
+use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
+use Cuadrik\Crm\Shared\Domain\Model\UserId;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Messenger\Transport\InMemoryTransport;
@@ -19,10 +19,10 @@ class RegularUserCreationTest extends KernelTestCase
     protected function setUp()
     {
         self::bootKernel();
-        $this->commandBus = self::$container->get('Cuadrik\Crm\Domain\Shared\Bus\Command\CommandBus');
-        $this->queryBus = self::$container->get('Cuadrik\Crm\Domain\Shared\Bus\Query\QueryBus');
-//        $this->bus = self::$container->get('Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyCommandBus.php');
-        $this->tokenDecoder = self::$container->get('Cuadrik\Crm\Infrastructure\Symfony\Service\JWTDecodeToken');
+        $this->commandBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\Command\CommandBus');
+        $this->queryBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\Query\QueryBus');
+//        $this->bus = self::$container->get('Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus.php');
+        $this->tokenDecoder = self::$container->get('Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\JWTDecodeToken');
     }
 
     /**

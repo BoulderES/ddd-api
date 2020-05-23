@@ -4,22 +4,15 @@ declare(strict_types = 1);
 
 namespace Cuadrik\Apps\Crm\Api\Controller\User;
 
-use Cuadrik\Crm\Application\User\UpdateUserCommand;
-use Cuadrik\Crm\Domain\Shared\ExceptionHandler;
-use Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyCommandBus;
-use Cuadrik\Crm\Infrastructure\Symfony\Service\TokenAuthenticatedController;
+use Cuadrik\Crm\Companies\Application\User\UpdateUserCommand;
+use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus;
+use Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\TokenAuthenticatedController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UpdateUserController extends AbstractController implements TokenAuthenticatedController
 {
-    private ExceptionHandler $exceptionHandler;
-
-    public function __construct(ExceptionHandler $exceptionHandler)
-    {
-        $this->exceptionHandler = $exceptionHandler;
-    }
 
     /**
      * @Route("/api/auth/update-user/{uuid}", defaults={}, name="view_user")

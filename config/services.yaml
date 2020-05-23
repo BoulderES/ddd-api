@@ -28,36 +28,36 @@ services:
 
     # jwt_creation_listener that should complete the token information
     cuadrik.event.jwt_created_listener:
-        class: Cuadrik\Crm\Infrastructure\Symfony\EventListener\JWTCreatedListener
+        class: Cuadrik\Crm\Companies\Infrastructure\Symfony\EventListener\JWTCreatedListener
         arguments: [ '@request_stack' ]
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
 
-    Cuadrik\Crm\Infrastructure\Symfony\EventListener\ExceptionListener:
+    Cuadrik\Crm\Shared\Infrastructure\Symfony\EventListener\ExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onException }
 
     # add json body in the request data
-    Cuadrik\Crm\Infrastructure\Symfony\EventListener\AddJsonBodyToRequestListener:
+    Cuadrik\Crm\Shared\Infrastructure\Symfony\EventListener\AddJsonBodyToRequestListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     # Used for tests
-    Cuadrik\Crm\Infrastructure\Symfony\Service\JWTDecodeToken:
+    Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\JWTDecodeToken:
         public: true
 
 
 
 
 #    user_create_command_handlers:
-#        namespace: Cuadrik\Crm\Application\User\
+#        namespace: Cuadrik\Crm\Companies\Application\User\
 #        resource: '%kernel.project_dir%/src/Crm/Application/User/*Handler.php'
 #        autoconfigure: false
 #        tags:
 #            - { name: messenger.message_handler, bus: command.bus }
 #
 #    user_login_query_handlers:
-#        namespace: Cuadrik\Crm\Application\Security\
+#        namespace: Cuadrik\Crm\Companies\Application\Security\
 #        resource: '%kernel.project_dir%/src/Crm/Application/Security/*Handler.php'
 #        autoconfigure: false
 #        tags:
@@ -67,45 +67,45 @@ services:
 
 
 #    _instanceof:
-#        Cuadrik\Crm\Domain\Shared\Bus\Command\CommandHandler:
+#        Cuadrik\Crm\Shared\Domain\Bus\Command\CommandHandler:
 #            tags: ['cuadrik.command_handler']
-#        Cuadrik\Crm\Domain\Shared\Bus\Query\QueryHandler:
+#        Cuadrik\Crm\Shared\Domain\Bus\Query\QueryHandler:
 #            tags: ['cuadrik.query_handler']
-#        Cuadrik\Crm\Domain\Shared\Bus\Event\DomainEventSubscriber:
+#        Cuadrik\Crm\Shared\Domain\Bus\Event\DomainEventSubscriber:
 #            tags: ['cuadrik.domain_event_subscriber']
 
 #    command_handler:
-#        namespace: Cuadrik\Crm\Domain\Shared\Bus\Command\
+#        namespace: Cuadrik\Crm\Shared\Domain\Bus\Command\
 #        resource: '%kernel.project_dir%/src/Crm/Domain/Shared/Bus/Command/*'
 #        autoconfigure: false
 #        tags:
 #            - { name: messenger.message_handler, bus: command.bus }
 #
 #    query_handler:
-#        namespace: Cuadrik\Crm\Domain\Shared\Bus\Query\
+#        namespace: Cuadrik\Crm\Shared\Domain\Bus\Query\
 #        resource: '%kernel.project_dir%/src/Crm/Domain/Shared/Bus/Query/*'
 #        autoconfigure: false
 #        tags:
 #            - { name: messenger.message_handler, bus: query.bus }
 #
 #    event_handler:
-#        namespace: Cuadrik\Crm\Domain\Shared\Bus\Event\
+#        namespace: Cuadrik\Crm\Shared\Domain\Bus\Event\
 #        resource: '%kernel.project_dir%/src/Crm/Domain/Shared/Bus/Event/*'
 #        autoconfigure: false
 #        tags:
 #            - { name: messenger.message_handler, bus: event.bus }
 
-#    Cuadrik\Crm\Domain\Shared\Bus\Command\CommandBus: '@Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyCommandBus'
-#    Cuadrik\Crm\Domain\Shared\Bus\Query\QueryBus: '@Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyQueryBus'
-#    Cuadrik\Crm\Domain\Shared\Bus\Event\EventBus: '@Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyEventBus'
+#    Cuadrik\Crm\Shared\Domain\Bus\Command\CommandBus: '@Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus'
+#    Cuadrik\Crm\Shared\Domain\Bus\Query\QueryBus: '@Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyQueryBus'
+#    Cuadrik\Crm\Shared\Domain\Bus\Event\EventBus: '@Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyEventBus'
 #
-#    Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyCommandBus:
+#    Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus:
 #        arguments: [!tagged cuadrik.command_handler]
 #        lazy: true
-#    Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyQueryBus:
+#    Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyQueryBus:
 #        arguments: [!tagged cuadrik.query_handler]
 #        lazy: true
-#    Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyEventBus:
+#    Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyEventBus:
 #        arguments: [!tagged cuadrik.domain_event_subscriber]
 #        lazy: true
 

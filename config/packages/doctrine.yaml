@@ -16,5 +16,5 @@ doctrine:
                 dir: '%kernel.project_dir%/config/mapping/orm'
 #                type: annotation
 #                dir: '%kernel.project_dir%/src/Crm/Domain'
-                prefix: 'Cuadrik\Crm\Domain'
+                prefix: 'Cuadrik\Crm\Companies\Domain'
                 alias: Cuadrik

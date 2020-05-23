@@ -4,9 +4,9 @@
 namespace Cuadrik\Apps\Crm\Api\Controller\Security;
 
 
-use Cuadrik\Crm\Application\Security\RefreshTokenCommand;
-use Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyCommandBus;
-use Cuadrik\Crm\Infrastructure\Symfony\Service\TokenAuthenticatedController;
+use Cuadrik\Crm\Companies\Application\Security\RefreshTokenCommand;
+use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus;
+use Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\TokenAuthenticatedController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

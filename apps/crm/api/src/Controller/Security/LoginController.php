@@ -5,23 +5,15 @@ declare(strict_types = 1);
 namespace Cuadrik\Apps\Crm\Api\Controller\Security;
 
 
-use Cuadrik\Crm\Application\Security\LoginQuery;
-use Cuadrik\Crm\Domain\Shared\ExceptionHandler;
-use Cuadrik\Crm\Infrastructure\Symfony\Bus\SymfonyQueryBus;
-use Cuadrik\Crm\Infrastructure\View\SPA\UserMakeup;
+use Cuadrik\Crm\Companies\Application\Security\LoginQuery;
+use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyQueryBus;
+use Cuadrik\Crm\Companies\Infrastructure\Projections\SPAUserProjector;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class LoginController extends AbstractController
 {
-    private ExceptionHandler $exceptionHandler;
-
-    public function __construct(ExceptionHandler $exceptionHandler)
-    {
-        $this->exceptionHandler = $exceptionHandler;
-    }
-
     /**
      * @Route("/api/login", defaults={}, name="login")
      * @param Request $request
@@ -40,7 +32,7 @@ class LoginController extends AbstractController
         return $this->json(
             [
                 'token' => $user->token(),
-                'user' => UserMakeup::execute($user)
+                'user' => SPAUserProjector::execute($user)
             ]
 
         );
