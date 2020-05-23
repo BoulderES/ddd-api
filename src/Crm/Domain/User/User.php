@@ -96,17 +96,17 @@ final class User extends AggregateRoot
     )
     {
         // TODO - modify to default values
-        $firstName      = "";
-        $lastName       = "";
-        $commercialName = "";
-        $termsAccepted  = true;
-        $photoUrl       = "";
-        $latitude       = "";
-        $longitude      = "";
-        $isMain         = true;
-        $isActive       = true;
-        $isLocked       = false;
-        $order          = 1;
+        $firstName      = FirstName::fromString("");
+        $lastName       = LastName::fromString("");
+        $commercialName = CommercialName::fromString("");
+        $termsAccepted  = TermsAccepted::fromBool(true);
+        $photoUrl       = PhotoUrl::fromString("");
+        $latitude       = Latitude::fromString("");
+        $longitude      = Longitude::fromString("");
+        $isMain         = IsMain::fromBool(true);
+        $isActive       = IsActive::fromBool(true);
+        $isLocked       = IsLocked::fromBool(false);
+        $order          = Order::fromInt(1);
 
         $user = new self(
             $uuid,
@@ -114,25 +114,24 @@ final class User extends AggregateRoot
             $username,
             $password,
             $email,
-            new IsMain($isMain),
-            new IsActive($isActive),
-            new IsLocked($isLocked),
-            new Order($order)
+            $isMain,
+            $isActive,
+            $isLocked,
+            $order
         );
 
         $user->token            = $token;
         $user->roles            = $roles;
-        $user->firstName        = FirstName::fromString($firstName);
-        $user->lastName         = LastName::fromString($lastName);
-        $user->commercialName   = CommercialName::fromString($commercialName);
-        $user->termsAccepted    = TermsAccepted::fromBool($termsAccepted);
-        $user->photoUrl         = PhotoUrl::fromString($photoUrl);
-        $user->latitude         = Latitude::fromString($latitude);
-        $user->longitude        = Longitude::fromString($longitude);
-        $user->isMain           = IsMain::fromBool($isMain);
-        $user->isActive         = IsActive::fromBool($isActive);
-        $user->isLocked         = IsLocked::fromBool($isLocked);
-        $user->order            = Order::fromInt($order);
+        $user->firstName        = $firstName;
+        $user->lastName         = $lastName;
+        $user->commercialName   = $commercialName;
+        $user->termsAccepted    = $termsAccepted;
+        $user->photoUrl         = $photoUrl;
+        $user->latitude         = $latitude;
+        $user->longitude        = $longitude;
+        $user->isMain           = $isMain;
+        $user->isActive         = $isActive;
+        $user->isLocked         = $isLocked;
 
         $eventId = Uuid::random()->value();
         $occurredOn = Utils::dateToString(new DateTimeImmutable());
