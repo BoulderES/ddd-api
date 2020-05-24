@@ -24,7 +24,7 @@ class ProjectUserController extends AbstractController implements TokenAuthentic
      * @param SymfonyQueryBus $bus
      * @return string
      */
-    public function viewUser(string $uuid, GetUserQueryHandler $getUserQueryHandler, SymfonyQueryBus $bus)
+    public function projectUser(string $uuid, GetUserQueryHandler $getUserQueryHandler, SymfonyQueryBus $bus)
     {
         if(!$user = $getUserQueryHandler->__invoke(new GetUserQuery($uuid)))
             ExceptionManager::throw('User not found!');

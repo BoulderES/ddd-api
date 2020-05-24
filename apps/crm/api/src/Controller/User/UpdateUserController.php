@@ -16,7 +16,7 @@ class UpdateUserController extends AbstractController implements TokenAuthentica
 {
 
     /**
-     * @Route("/api/auth/update-user/{uuid}", defaults={}, name="project_user")
+     * @Route("/api/auth/update-user/{uuid}", defaults={}, name="update_user")
      * @param Request $request
      * @param string $uuid
      * @param UpdateUserCommandHandler $updateUserCommandHandler
@@ -30,7 +30,9 @@ class UpdateUserController extends AbstractController implements TokenAuthentica
                 $request->request->get("username"),
                 $request->request->get("password"),
                 $request->request->get("email"),
-                $request->request->get("photoUrl")
+                $request->request->get("photoUrl"),
+                $request->request->get("firstName"),
+                $request->request->get("lastName"),
             )
         );
 

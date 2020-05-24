@@ -22,6 +22,12 @@ final class UserCreatedDomainEvent extends DomainEvent
         $this->username = $username;
     }
 
+    public function __toString()
+    {
+        return "UserCreatedDomainEvent";
+        // TODO: Implement __toString() method.
+    }
+
     public static function eventName(): string
     {
         return 'user.created';

@@ -19,7 +19,7 @@ class RegisterUserTest extends WebTestCase
 //        $client->request('POST','/api/register',[],[],['CONTENT_TYPE' => 'application/json'],'{"username":"admin", "email":"admin@admin.admin","password":"admin", "photoUrl": "profile.jpg", "roles": { "0": "ROLE_USER", "1": "ROLE_ADMIN" }}');
         $client->request('POST','/api/register',[],[],['CONTENT_TYPE' => 'application/json'],'{"username": "'.$username.'", "email": "'.$email.'", "password":"admin", "photoUrl": "profile.jpg", "roles": { "0": "ROLE_USER", "1": "ROLE_ADMIN" }}');
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $this->assertStringContainsString('/api/auth/view-user/', $client->getResponse()->getTargetUrl());
+        $this->assertStringContainsString('/api/auth/project-user/', $client->getResponse()->getTargetUrl());
 
 //        $client->request('POST','/api/login',[],[],['CONTENT_TYPE' => 'application/json'],            '{"username":"admin", "email":"admin@admin.admin","password":"admin"}');
         $client->request('POST','/api/login',[],[],['CONTENT_TYPE' => 'application/json'],'{"username": "'.$username.'", "password":"admin"}');

@@ -4,6 +4,7 @@ namespace Cuadrik\Tests\User;
 
 use Cuadrik\Crm\Companies\Application\Security\LoginQuery;
 use Cuadrik\Crm\Companies\Application\User\CreateRegularUserCommand;
+use Cuadrik\Crm\Companies\Application\User\GetUserQuery;
 use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
 use Cuadrik\Crm\Shared\Domain\Model\UserId;
 
@@ -16,6 +17,7 @@ class RegularUserCreationTest extends KernelTestCase
 //    private $queryBus;
 //    private $tokenDecoder;
     private $createUserCommandHandler;
+    private $getUserQueryHandler;
 
     protected function setUp()
     {
@@ -25,6 +27,7 @@ class RegularUserCreationTest extends KernelTestCase
 //        $this->bus = self::$container->get('Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus.php');
 //        $this->tokenDecoder = self::$container->get('Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\JWTDecodeToken');
         $this->createUserCommandHandler = self::$container->get('Cuadrik\Crm\Companies\Application\User\CreateRegularUserCommandHandler');
+        $this->getUserQueryHandler = self::$container->get('Cuadrik\Crm\Companies\Application\User\GetUserQueryHandler');
     }
 
     /**
@@ -42,7 +45,7 @@ class RegularUserCreationTest extends KernelTestCase
         $email = "email$randomize@email.email";
         $photoUrl = "$randomize.jpg";
 
-        $this->createUserCommandHandler->__invoke(new CreateRegularUserCommand(
+        $userCommand = $this->createUserCommandHandler->__invoke(new CreateRegularUserCommand(
                 $uuid,
                 $companyUuid,
                 $username,
@@ -52,9 +55,10 @@ class RegularUserCreationTest extends KernelTestCase
             )
         );
 
-//        /* @var InMemoryTransport $transport */
-//        $transport = self::$container->get('messenger.transport.command');
-//        var_export($transport);
+        $userQuery = $this->getUserQueryHandler->__invoke(new GetUserQuery($uuid));
+
+        $this->assertEquals($userCommand, $userQuery);
+
 
 
 
@@ -77,10 +81,9 @@ class RegularUserCreationTest extends KernelTestCase
 //        var_export(get_class_methods($transport->get()));
 //        var_export(json_encode($transport));
 
-        /* @var InMemoryTransport $transport */
-        $transport = self::$container->get('messenger.transport.command');
-//        var_export(get_class_methods($transport->get()));
-        $this->assertCount(1, $transport->get());
+//        /* @var InMemoryTransport $transport */
+//        $transport = self::$container->get('messenger.transport.command');
+//        $this->assertCount(1, $transport->get());
 //        dd($transport);
 
     }

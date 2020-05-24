@@ -138,7 +138,6 @@ final class User extends AggregateRoot
 
         $user->record(new UserCreatedDomainEvent($uuid->value(), $username->value(),$eventId,$occurredOn));
 
-
         return $user;
 
     }
@@ -160,6 +159,8 @@ final class User extends AggregateRoot
 
         if( "" !== $password )
             $this->password = $password;
+
+        return $this;
     }
 
     public function refreshToken(Token $token)

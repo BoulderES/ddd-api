@@ -6,5 +6,5 @@ namespace Cuadrik\Crm\Shared\Domain\Bus\Event;
 
 interface EventBus
 {
-    public function publish(DomainEvent $domainEvent): void;
+    public function publish(DomainEvent $domainEvent);//: void;
 }
