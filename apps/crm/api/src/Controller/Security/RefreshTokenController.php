@@ -5,6 +5,7 @@ namespace Cuadrik\Apps\Crm\Api\Controller\Security;
 
 
 use Cuadrik\Crm\Companies\Application\Security\RefreshTokenCommand;
+use Cuadrik\Crm\Companies\Application\Security\RefreshTokenCommandHandler;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus;
 use Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\TokenAuthenticatedController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,14 +20,15 @@ class RefreshTokenController extends AbstractController implements TokenAuthenti
     /**
      * @Route("/api/auth/refresh-token", defaults={}, name="validation")
      * @param Request $request
+     * @param RefreshTokenCommandHandler $refreshTokenCommandHandler
      * @param SymfonyCommandBus $bus
      * @return string the token validation return a new token with a fresh expiration date
      */
-    public function refreshToken(Request $request, SymfonyCommandBus $bus)
+    public function refreshToken(Request $request, RefreshTokenCommandHandler $refreshTokenCommandHandler, SymfonyCommandBus $bus)
     {
         $token = $request->request->get("token");
 
-        $bus->dispatch(new RefreshTokenCommand(
+        $refreshTokenCommandHandler->__invoke(new RefreshTokenCommand(
                 $token
             )
         );

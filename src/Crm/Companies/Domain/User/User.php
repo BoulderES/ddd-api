@@ -171,7 +171,7 @@ final class User extends AggregateRoot
 
     public function token()
     {
-        return $this->token;
+        return $this->token->value();
     }
 
     public function isActive()

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Cuadrik\Apps\Crm\Api\Controller\User;
 
 use Cuadrik\Crm\Companies\Application\User\UpdateUserCommand;
+use Cuadrik\Crm\Companies\Application\User\UpdateUserCommandHandler;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus;
 use Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\TokenAuthenticatedController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +17,15 @@ class UpdateUserController extends AbstractController implements TokenAuthentica
 
     /**
      * @Route("/api/auth/update-user/{uuid}", defaults={}, name="view_user")
+     * @param Request $request
      * @param string $uuid
+     * @param UpdateUserCommandHandler $updateUserCommandHandler
      * @param SymfonyCommandBus $bus
      * @return string
      */
-    public function updateUser(Request $request, string $uuid, SymfonyCommandBus $bus)
+    public function updateUser(Request $request, string $uuid, UpdateUserCommandHandler $updateUserCommandHandler, SymfonyCommandBus $bus)
     {
-        $bus->dispatch(new UpdateUserCommand(
+        $updateUserCommandHandler->__invoke(new UpdateUserCommand(
                 $uuid,
                 $request->request->get("username"),
                 $request->request->get("password"),
