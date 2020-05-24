@@ -40,7 +40,7 @@ class RegisterController extends AbstractController
         );
 
 
-        return $this->redirectToRoute('view_user', ['uuid' => $userUuid]);
+        return $this->redirectToRoute('project_user', ['uuid' => $userUuid]);
 
     }
 

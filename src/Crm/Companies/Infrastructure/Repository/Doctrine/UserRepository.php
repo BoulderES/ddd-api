@@ -28,10 +28,10 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
 //
 //    }
 
-    public function userIdByToken(string $token): ?array
+    public function userUuidByToken(string $token): ?array
     {
         $qb = $this->createQueryBuilder('u')
-            ->select('u.id')
+            ->select('u.uuid')
             ->where('u.token.value = :token')
             ->setParameter('token',$token)
             ->getQuery()

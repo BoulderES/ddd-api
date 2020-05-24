@@ -16,7 +16,7 @@ class UpdateUserController extends AbstractController implements TokenAuthentica
 {
 
     /**
-     * @Route("/api/auth/update-user/{uuid}", defaults={}, name="view_user")
+     * @Route("/api/auth/update-user/{uuid}", defaults={}, name="project_user")
      * @param Request $request
      * @param string $uuid
      * @param UpdateUserCommandHandler $updateUserCommandHandler
@@ -34,6 +34,6 @@ class UpdateUserController extends AbstractController implements TokenAuthentica
             )
         );
 
-        return $this->redirectToRoute('view_user', ['uuid' => $uuid]);
+        return $this->redirectToRoute('project_user', ['uuid' => $uuid]);
     }
 }

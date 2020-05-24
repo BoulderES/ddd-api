@@ -27,7 +27,7 @@ class TokenValidationSubscriber implements EventSubscriberInterface
         $this->tokenDecoder = $tokenDecoder;
     }
 
-    public function onKernelController(ControllerEvent $event)
+    public function onKernelController(ControllerEvent $event): void
     {
         $controller = $event->getController();
 
@@ -43,9 +43,7 @@ class TokenValidationSubscriber implements EventSubscriberInterface
 
                 $token = $this->extractToken($request);
 
-                $user = $this->userRepository->userIdByToken($token);
-
-                if (!$user)
+                if (!$this->userRepository->userUuidByToken($token))
                     ExceptionManager::throw('User related to the token not found!', 401);
 
             }

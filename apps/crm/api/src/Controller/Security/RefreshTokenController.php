@@ -33,7 +33,7 @@ class RefreshTokenController extends AbstractController implements TokenAuthenti
             )
         );
 
-        return $this->redirectToRoute('view_user', ['uuid' => $token->uuid()]);
+        return $this->redirectToRoute('project_user', ['uuid' => $token->uuid()]);
     }
 
 }

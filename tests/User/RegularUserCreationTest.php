@@ -12,17 +12,19 @@ use Symfony\Component\Messenger\Transport\InMemoryTransport;
 
 class RegularUserCreationTest extends KernelTestCase
 {
-    private $commandBus;
-    private $queryBus;
-    private $tokenDecoder;
+//    private $commandBus;
+//    private $queryBus;
+//    private $tokenDecoder;
+    private $createUserCommandHandler;
 
     protected function setUp()
     {
         self::bootKernel();
-        $this->commandBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\Command\CommandBus');
-        $this->queryBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\Query\QueryBus');
+//        $this->commandBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\Command\CommandBus');
+//        $this->queryBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\Query\QueryBus');
 //        $this->bus = self::$container->get('Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus.php');
-        $this->tokenDecoder = self::$container->get('Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\JWTDecodeToken');
+//        $this->tokenDecoder = self::$container->get('Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\JWTDecodeToken');
+        $this->createUserCommandHandler = self::$container->get('Cuadrik\Crm\Companies\Application\User\CreateRegularUserCommandHandler');
     }
 
     /**
@@ -40,7 +42,7 @@ class RegularUserCreationTest extends KernelTestCase
         $email = "email$randomize@email.email";
         $photoUrl = "$randomize.jpg";
 
-        $this->commandBus->dispatch(new CreateRegularUserCommand(
+        $this->createUserCommandHandler->__invoke(new CreateRegularUserCommand(
                 $uuid,
                 $companyUuid,
                 $username,

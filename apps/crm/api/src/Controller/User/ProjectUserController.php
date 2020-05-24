@@ -14,11 +14,11 @@ use Cuadrik\Crm\Companies\Infrastructure\Projections\SPAUserProjector;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ViewUserController extends AbstractController implements TokenAuthenticatedController
+class ProjectUserController extends AbstractController implements TokenAuthenticatedController
 {
 
     /**
-     * @Route("/api/auth/view-user/{uuid}", defaults={}, name="view_user")
+     * @Route("/api/auth/project-user/{uuid}", defaults={}, name="project_user")
      * @param string $uuid
      * @param GetUserQueryHandler $getUserQueryHandler
      * @param SymfonyQueryBus $bus
