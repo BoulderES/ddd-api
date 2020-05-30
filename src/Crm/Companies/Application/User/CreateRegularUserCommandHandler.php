@@ -39,9 +39,13 @@ final class CreateRegularUserCommandHandler implements CommandHandler
         $this->bus                  = $bus;
     }
 
-    public function __invoke(CreateRegularUserCommand $createUserCommand): User
+    public function __invoke(CreateRegularUserCommand $createUserCommand): void
     {
+        $this->handle($createUserCommand);
+    }
 
+    public function handle(CreateRegularUserCommand $createUserCommand): User
+    {
         if("" === $createUserCommand->getPassword())
             ExceptionManager::throw('Password can not be empty. ' . get_called_class());
 
@@ -67,4 +71,5 @@ final class CreateRegularUserCommandHandler implements CommandHandler
 
         return $user;
     }
+
 }

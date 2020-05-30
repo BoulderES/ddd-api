@@ -15,7 +15,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     Cuadrik\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Pruebas,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -33,6 +33,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
 
+    # exceptions format
     Cuadrik\Crm\Shared\Infrastructure\Symfony\EventListener\ExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onException }

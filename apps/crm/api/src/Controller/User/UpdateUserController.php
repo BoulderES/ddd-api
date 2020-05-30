@@ -8,11 +8,11 @@ use Cuadrik\Crm\Companies\Application\User\UpdateUserCommand;
 use Cuadrik\Crm\Companies\Application\User\UpdateUserCommandHandler;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus;
 use Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\TokenAuthenticatedController;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Cuadrik\Crm\Shared\Infrastructure\Symfony\ExtendedController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UpdateUserController extends AbstractController implements TokenAuthenticatedController
+class UpdateUserController extends ExtendedController implements TokenAuthenticatedController
 {
 
     /**

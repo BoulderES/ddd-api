@@ -41,7 +41,12 @@ final class UpdateUserCommandHandler implements CommandHandler
         $this->tokenEncoder = $tokenEncoder;
     }
 
-    public function __invoke(UpdateUserCommand $updateUserCommand): User
+    public function __invoke(UpdateUserCommand $updateUserCommand): void
+    {
+        $this->handle($updateUserCommand);
+    }
+
+    public function handle(UpdateUserCommand $updateUserCommand): User
     {
         $user = $this->userRepository->userByUuid($updateUserCommand->getUuid());
 

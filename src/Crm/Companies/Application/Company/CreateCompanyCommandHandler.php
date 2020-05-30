@@ -24,7 +24,12 @@ class CreateCompanyCommandHandler
         $this->createCompany = $createCompany;
     }
 
-    public function __invoke(CreateCompanyCommand $createCompanyCommand)
+    public function __invoke(CreateCompanyCommand $createCompanyCommand): void
+    {
+        $this->handle($createCompanyCommand);
+    }
+
+    public function handle(CreateCompanyCommand $createCompanyCommand)
     {
         if( !$company = $this->companyRepository->findOneBy(['uuid' => $createCompanyCommand->getUuid()]) ) {
 

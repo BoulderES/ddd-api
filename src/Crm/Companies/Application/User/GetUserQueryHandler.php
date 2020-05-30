@@ -21,7 +21,12 @@ final class GetUserQueryHandler implements QueryHandler
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(GetUserQuery $getUserQuery): User
+    public function __invoke(GetUserQuery $getUserQuery): void
+    {
+        $this->handle($getUserQuery);
+    }
+
+    public function handle(GetUserQuery $getUserQuery): User
     {
         $user = $this->userRepository->userByUuid($getUserQuery->getUuid());
 

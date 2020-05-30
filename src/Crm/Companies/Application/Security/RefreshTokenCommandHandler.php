@@ -25,7 +25,12 @@ class RefreshTokenCommandHandler implements CommandHandler
         $this->tokenDecoder = $tokenDecoder;
     }
 
-    public function __invoke(RefreshTokenCommand $refreshToken)
+    public function __invoke(RefreshTokenCommand $refreshToken): void
+    {
+        $this->handle($refreshToken);
+    }
+
+    public function handle(RefreshTokenCommand $refreshToken)
     {
         $user = $this->userRepository->userByToken($refreshToken->getToken());
         if(!$user)

@@ -6,5 +6,5 @@ namespace Cuadrik\Crm\Shared\Domain\Bus\Command;
 
 interface SyncCommandBus
 {
-    public function dispatchWithResponse(SyncCommand $command); //: void;
+    public function handle(SyncCommand $command); //: void;
 }

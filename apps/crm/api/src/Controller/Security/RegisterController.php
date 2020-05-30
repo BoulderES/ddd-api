@@ -10,11 +10,11 @@ use Cuadrik\Crm\Companies\Application\User\CreateRegularUserCommandHandler;
 use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
 use Cuadrik\Crm\Shared\Domain\Model\UserId;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Cuadrik\Crm\Shared\Infrastructure\Symfony\ExtendedController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RegisterController extends AbstractController
+class RegisterController extends ExtendedController
 {
 
     /**

@@ -28,7 +28,12 @@ class LoginQueryHandler implements QueryHandler
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function __invoke(LoginQuery $loginCommand)
+    public function __invoke(LoginQuery $loginCommand): void
+    {
+        $this->handle($loginCommand);
+    }
+
+    public function handle(LoginQuery $loginCommand)
     {
         $user = $this->userRepository->findOneBy(['username.value' => $loginCommand->getUsername()]);
         if(!$user)

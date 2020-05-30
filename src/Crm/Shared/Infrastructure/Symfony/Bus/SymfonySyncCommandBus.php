@@ -23,7 +23,7 @@ class SymfonySyncCommandBus implements SyncCommandBus
 
     }
 
-    public function dispatchWithResponse(SyncCommand $command, array $stamps = [])//: void
+    public function handle(SyncCommand $command, array $stamps = [])//: void
     {
         $filesystem = new Filesystem();
         $filesystem->appendToFile('/var/www/html/public/logs/SymfonyCommandBus.log', '/var/www/html/logs/MessageBusInterface'.date("Y-m-d H:i:s")."\n".date("Y-m-d H:i:s")."\n"."\n"."\n"."\n"."\n");

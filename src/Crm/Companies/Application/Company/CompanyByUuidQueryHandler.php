@@ -19,7 +19,12 @@ class CompanyByUuidQueryHandler implements QueryHandler
         $this->companyRepository = $companyRepository;
     }
 
-    public function __invoke(CompanyByUuidQuery $companyByUuidQuery)
+    public function __invoke(CompanyByUuidQuery $companyByUuidQuery): void
+    {
+        $this->handle($companyByUuidQuery);
+    }
+
+    public function handle(CompanyByUuidQuery $companyByUuidQuery)
     {
         $company = $this->companyRepository->findOneBy(['uuid' => $companyByUuidQuery->getUuid()]);
 
