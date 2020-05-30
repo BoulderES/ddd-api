@@ -30,6 +30,11 @@
         <!-- MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages -->
         <!-- ###- symfony/messenger ### -->
 
+        <!-- ###+ broadway/event-store-mongodb ### -->
+        <env name="BROADWAY_EVENT_STORE_MONGODB_URI" value="mongodb://127.0.0.1/"/>
+        <env name="BROADWAY_EVENT_STORE_MONGODB_DATABASE" value="default"/>
+        <!-- ###- broadway/event-store-mongodb ### -->
+
     </php>
 <!--    <extensions>-->
 <!--        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>-->

@@ -6,6 +6,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "broadway/broadway-bundle": "^0.5.0",
+        "broadway/event-store-mongodb": "^0.5.0",
         "doctrine/doctrine-bundle": "^2.0",
         "lexik/jwt-authentication-bundle": "^2.6",
         "ramsey/uuid-doctrine": "^1.6",
