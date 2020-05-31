@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 
@@ -23,9 +24,9 @@ class ProjectUserController extends ExtendedController implements TokenAuthentic
      * @param string $uuid
      * @param GetUserQueryHandler $getUserQueryHandler
      * @param SymfonyQueryBus $bus
-     * @return string
+     * @return JsonResponse
      */
-    public function projectUser(string $uuid, GetUserQueryHandler $getUserQueryHandler, SymfonyQueryBus $bus)
+    public function projectUser(string $uuid, GetUserQueryHandler $getUserQueryHandler, SymfonyQueryBus $bus): JsonResponse
     {
         if(!$user = $getUserQueryHandler->handle(new GetUserQuery($uuid)))
             ExceptionManager::throw('User not found!');

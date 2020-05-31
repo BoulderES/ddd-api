@@ -6,7 +6,7 @@ namespace Cuadrik\Crm\Companies\Application\Security;
 
 use Cuadrik\Crm\Shared\Domain\Bus\Query\Query;
 
-class LoginQuery implements Query
+class SignInQuery implements Query
 {
     private string $username;
 

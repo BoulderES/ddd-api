@@ -1,30 +1,32 @@
 <?php
+
 declare(strict_types = 1);
 
 
 namespace Cuadrik\Apps\Crm\Api\Controller\Security;
 
 
-use Cuadrik\Crm\Companies\Application\Security\LoginQuery;
-use Cuadrik\Crm\Companies\Application\Security\LoginQueryHandler;
+use Cuadrik\Crm\Companies\Application\Security\SignInQuery;
+use Cuadrik\Crm\Companies\Application\Security\SignInQueryHandler;
 use Cuadrik\Crm\Companies\Infrastructure\Projections\SPAUserProjector;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\ExtendedController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class LoginController extends ExtendedController
+class UserSignInController extends ExtendedController
 {
     /**
      * @Route("/api/login", defaults={}, name="login")
      * @param Request $request
-     * @param LoginQueryHandler $loginQueryHandler
-     * @return string
+     * @param SignInQueryHandler $signInQueryHandler
+     * @return RedirectResponse
      */
-    public function index(Request $request, LoginQueryHandler $loginQueryHandler)
+    public function userSignIn(Request $request, SignInQueryHandler $signInQueryHandler): RedirectResponse
     {
 
-        $uuid = $loginQueryHandler->handle(new LoginQuery(
+        $uuid = $signInQueryHandler->handle(new SignInQuery(
                 $request->request->get("username"),
                 $request->request->get("password")
             )

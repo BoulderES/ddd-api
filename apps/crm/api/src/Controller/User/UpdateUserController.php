@@ -9,6 +9,7 @@ use Cuadrik\Crm\Companies\Application\User\UpdateUserCommandHandler;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus;
 use Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\TokenAuthenticatedController;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\ExtendedController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,9 +21,9 @@ class UpdateUserController extends ExtendedController implements TokenAuthentica
      * @param Request $request
      * @param string $uuid
      * @param UpdateUserCommandHandler $updateUserCommandHandler
-     * @return string
+     * @return RedirectResponse
      */
-    public function updateUser(Request $request, string $uuid, UpdateUserCommandHandler $updateUserCommandHandler)
+    public function updateUser(Request $request, string $uuid, UpdateUserCommandHandler $updateUserCommandHandler): RedirectResponse
     {
         $updateUserCommandHandler->handle(new UpdateUserCommand(
                 $uuid,

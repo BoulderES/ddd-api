@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 
@@ -11,10 +12,11 @@ use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
 use Cuadrik\Crm\Shared\Domain\Model\UserId;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\ExtendedController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RegisterController extends ExtendedController
+class UserSignUpController extends ExtendedController
 {
 
     /**
@@ -22,14 +24,14 @@ class RegisterController extends ExtendedController
      * @param Request $request
      * @param SymfonyCommandBus $bus
      * @param CreateRegularUserCommandHandler $createRegularUserCommandHandler
-     * @return string
+     * @return RedirectResponse
      */
-    public function register(Request $request, CreateRegularUserCommandHandler $createRegularUserCommandHandler, SymfonyCommandBus $bus)
+    public function userSignUp(Request $request, CreateRegularUserCommandHandler $createRegularUserCommandHandler, SymfonyCommandBus $bus): RedirectResponse
     {
         $userUuid = Userid::random()->value();
         $companyUuid = CompanyId::random()->value();
 
-        $createRegularUserCommandHandler->__invoke(new CreateRegularUserCommand(
+        $this->dispatch(new CreateRegularUserCommand(
                 $userUuid,
                 $companyUuid,
                 $request->request->get("username"),

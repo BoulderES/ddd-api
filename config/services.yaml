@@ -15,7 +15,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     Cuadrik\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Pruebas,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -72,7 +72,7 @@ services:
 
 
 #    _instanceof:
-#        Cuadrik\Crm\Shared\Domain\Bus\Command\CommandHandler:
+#        Cuadrik\Crm\Shared\Domain\Bus\SyncCommand\CommandHandler:
 #            tags: ['cuadrik.command_handler']
 #        Cuadrik\Crm\Shared\Domain\Bus\Query\QueryHandler:
 #            tags: ['cuadrik.query_handler']
@@ -80,8 +80,8 @@ services:
 #            tags: ['cuadrik.domain_event_subscriber']
 
 #    command_handler:
-#        namespace: Cuadrik\Crm\Shared\Domain\Bus\Command\
-#        resource: '%kernel.project_dir%/src/Crm/Domain/Shared/Bus/Command/*'
+#        namespace: Cuadrik\Crm\Shared\Domain\Bus\SyncCommand\
+#        resource: '%kernel.project_dir%/src/Crm/Domain/Shared/Bus/SyncCommand/*'
 #        autoconfigure: false
 #        tags:
 #            - { name: messenger.message_handler, bus: command.bus }
@@ -100,7 +100,7 @@ services:
 #        tags:
 #            - { name: messenger.message_handler, bus: event.bus }
 
-#    Cuadrik\Crm\Shared\Domain\Bus\Command\CommandBus: '@Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus'
+#    Cuadrik\Crm\Shared\Domain\Bus\SyncCommand\CommandBus: '@Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus'
 #    Cuadrik\Crm\Shared\Domain\Bus\Query\QueryBus: '@Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyQueryBus'
 #    Cuadrik\Crm\Shared\Domain\Bus\Event\EventBus: '@Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyEventBus'
 #

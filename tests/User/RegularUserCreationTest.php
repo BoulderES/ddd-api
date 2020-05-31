@@ -2,7 +2,7 @@
 
 namespace Cuadrik\Tests\User;
 
-use Cuadrik\Crm\Companies\Application\Security\LoginQuery;
+use Cuadrik\Crm\Companies\Application\Security\SignInQuery;
 use Cuadrik\Crm\Companies\Application\User\CreateRegularUserCommand;
 use Cuadrik\Crm\Companies\Application\User\GetUserQuery;
 use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
@@ -22,7 +22,7 @@ class RegularUserCreationTest extends KernelTestCase
     protected function setUp()
     {
         self::bootKernel();
-//        $this->commandBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\Command\CommandBus');
+//        $this->commandBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\SyncCommand\CommandBus');
 //        $this->queryBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\Query\QueryBus');
 //        $this->bus = self::$container->get('Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus.php');
 //        $this->tokenDecoder = self::$container->get('Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\JWTDecodeToken');
@@ -66,7 +66,7 @@ class RegularUserCreationTest extends KernelTestCase
 
 
 
-//        $user = $this->queryBus->query(new LoginQuery(
+//        $user = $this->queryBus->query(new SignInQuery(
 //                "admin",
 //                "admin"
 //            )

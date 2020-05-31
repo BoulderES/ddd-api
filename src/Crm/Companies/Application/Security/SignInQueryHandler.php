@@ -13,7 +13,7 @@ use Cuadrik\Crm\Companies\Domain\User\UserRepositoryInterface;
 use Cuadrik\Crm\Shared\Domain\Model\UserId;
 use Cuadrik\Crm\Shared\Domain\Utils\Exceptions\ExceptionManager;
 
-class LoginQueryHandler implements QueryHandler
+class SignInQueryHandler implements QueryHandler
 {
 
     private UserRepositoryInterface $userRepository;
@@ -28,14 +28,14 @@ class LoginQueryHandler implements QueryHandler
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function __invoke(LoginQuery $loginCommand): void
+    public function __invoke(SignInQuery $signInQuery): void
     {
-        $this->handle($loginCommand);
+        $this->handle($signInQuery);
     }
 
-    public function handle(LoginQuery $loginCommand): UserId
+    public function handle(SignInQuery $signInQuery): UserId
     {
-        $user = $this->userRepository->userByUsername($loginCommand->getUsername());
+        $user = $this->userRepository->userByUsername($signInQuery->getUsername());
         if(!$user)
             ExceptionManager::throw('User not found! ' . get_called_class());
 
@@ -43,7 +43,7 @@ class LoginQueryHandler implements QueryHandler
             $user->uuid(),
             $user->userName(),
             $user->password(),
-            new Password($loginCommand->getPassword())
+            new Password($signInQuery->getPassword())
         ))
             ExceptionManager::throw('Wrong username/password! ' . get_called_class(), 401);
 

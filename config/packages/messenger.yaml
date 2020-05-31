@@ -8,6 +8,9 @@ framework:
                 middleware:
                     - validation
                     - doctrine_transaction
+            sync.command.bus:
+                middleware:
+                    - validation
             query.bus:
                 middleware:
                     - validation
@@ -18,13 +21,16 @@ framework:
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                #                serializer: messenger.transport.symfony_serializer
             sync:
                 dsn: 'sync://'
                 #                serializer: messenger.transport.symfony_serializer
-            command:
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                #                serializer: messenger.transport.symfony_serializer
+            syncCommand:
+                dsn: 'sync://'
+                #                serializer: messenger.transport.symfony_serializer
+            asyncCommand:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 #                serializer: messenger.transport.symfony_serializer
             query:
@@ -38,9 +44,9 @@ framework:
         routing:
             # Route your messages to the transports
             # 'Cuadrik\Message\YourMessage': async
-            'Cuadrik\Crm\Shared\Domain\Bus\Command\Command': sync
+            'Cuadrik\Crm\Shared\Domain\Bus\Command\Command': asyncCommand
             'Cuadrik\Crm\Shared\Domain\Bus\Command\SyncCommand': sync
-            'Cuadrik\Crm\Shared\Domain\Bus\Query\Query': sync
+            'Cuadrik\Crm\Shared\Domain\Bus\Query\Query': query
             'Cuadrik\Crm\Shared\Domain\Bus\Event\DomainEvent': domainEvent
 
 

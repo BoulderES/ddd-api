@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types = 1);
+
 
 namespace Cuadrik\Crm\Companies\Infrastructure\Repository\Doctrine;
 

@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "beberlei/assert": "^3.2",
         "doctrine/doctrine-bundle": "^2.0",
         "lexik/jwt-authentication-bundle": "^2.6",
         "ramsey/uuid-doctrine": "^1.6",

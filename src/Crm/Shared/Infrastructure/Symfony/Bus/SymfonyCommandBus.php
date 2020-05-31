@@ -31,4 +31,5 @@ class SymfonyCommandBus implements CommandBus
         $this->commandBus->dispatch($command);
 
     }
+
 }

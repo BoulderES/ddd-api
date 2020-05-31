@@ -9,6 +9,7 @@ use Cuadrik\Crm\Shared\Domain\Bus\Query\QueryBus;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class SymfonyQueryBus implements QueryBus
 {
@@ -28,7 +29,16 @@ class SymfonyQueryBus implements QueryBus
     {
         $filesystem = new Filesystem();
         $filesystem->appendToFile('/var/www/html/public/logs/SymfonyQueryBus.log', '/var/www/html/logs/SymfonyQueryBus'.date("Y-m-d H:i:s")."\n".date("Y-m-d H:i:s")."\n"."\n"."\n"."\n"."\n");
-        return $this->handle($query);
+//        return $this->handle($query);
+        try {
+            /** @var HandledStamp $stamp */
+            $stamp = $this->messageBus->dispatch($query)->last(HandledStamp::class);
+
+            return $stamp->getResult();
+        } catch (\Exception $unused) {
+            throw new \Exception($query);
+        }
+
     }
 
 }
