@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 
-class RefreshTokenController extends ExtendedController implements TokenAuthenticatedController
+class RefreshTokenController extends ExtendedController  implements TokenAuthenticatedController
 {
 
     /**
@@ -25,14 +25,13 @@ class RefreshTokenController extends ExtendedController implements TokenAuthenti
      */
     public function refreshToken(Request $request, RefreshTokenCommandHandler $refreshTokenCommandHandler)
     {
-        $token = $request->request->get("token");
 
-        $refreshTokenCommandHandler->__invoke(new RefreshTokenCommand(
-                $token
+        $uuid = $refreshTokenCommandHandler->handle(new RefreshTokenCommand(
+                $request->request->get("token")
             )
         );
 
-        return $this->redirectToRoute('project_user', ['uuid' => $token->uuid()]);
+        return $this->redirectToRoute('project_user', ['uuid' => $uuid->value()]);
     }
 
 }

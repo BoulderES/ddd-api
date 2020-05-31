@@ -24,19 +24,14 @@ class LoginController extends ExtendedController
     public function index(Request $request, LoginQueryHandler $loginQueryHandler)
     {
 
-        $user = $loginQueryHandler->handle(new LoginQuery(
+        $uuid = $loginQueryHandler->handle(new LoginQuery(
                 $request->request->get("username"),
                 $request->request->get("password")
             )
         );
 
-        return new JsonResponse(
-            [
-                'token' => $user->token(),
-                'user' => SPAUserProjector::execute($user)
-            ]
+        return $this->redirectToRoute('project_user', ['uuid' => $uuid->value()]);
 
-        );
     }
 
 }

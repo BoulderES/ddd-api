@@ -4,11 +4,6 @@
         <id name="uuid" type="string" column="uuid">
             <generator strategy="NONE"/>
         </id>
-        <entity-listeners>
-            <entity-listener class="User">
-                <lifecycle-callback type="preUpdate" method="preUpdateHandler"/>
-            </entity-listener>
-        </entity-listeners>
 
         <embedded name="username" class="Username" use-column-prefix="false" />
         <embedded name="email" class="Email" use-column-prefix="false" />

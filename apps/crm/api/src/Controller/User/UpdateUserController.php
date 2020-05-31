@@ -20,12 +20,11 @@ class UpdateUserController extends ExtendedController implements TokenAuthentica
      * @param Request $request
      * @param string $uuid
      * @param UpdateUserCommandHandler $updateUserCommandHandler
-     * @param SymfonyCommandBus $bus
      * @return string
      */
-    public function updateUser(Request $request, string $uuid, UpdateUserCommandHandler $updateUserCommandHandler, SymfonyCommandBus $bus)
+    public function updateUser(Request $request, string $uuid, UpdateUserCommandHandler $updateUserCommandHandler)
     {
-        $updateUserCommandHandler->__invoke(new UpdateUserCommand(
+        $updateUserCommandHandler->handle(new UpdateUserCommand(
                 $uuid,
                 $request->request->get("username"),
                 $request->request->get("password"),

@@ -12,6 +12,7 @@ use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyQueryBus;
 use Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\TokenAuthenticatedController;
 use Cuadrik\Crm\Companies\Infrastructure\Projections\SPAUserProjector;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\ExtendedController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProjectUserController extends ExtendedController implements TokenAuthenticatedController
@@ -26,15 +27,11 @@ class ProjectUserController extends ExtendedController implements TokenAuthentic
      */
     public function projectUser(string $uuid, GetUserQueryHandler $getUserQueryHandler, SymfonyQueryBus $bus)
     {
-        if(!$user = $getUserQueryHandler->__invoke(new GetUserQuery($uuid)))
+        if(!$user = $getUserQueryHandler->handle(new GetUserQuery($uuid)))
             ExceptionManager::throw('User not found!');
 
-        return $this->json(
-            [
-                'token' => $user->token(),
-                'user' => SPAUserProjector::execute($user)
-            ]
-
+        return new JsonResponse(
+            SPAUserProjector::execute($user)
         );
     }
 }

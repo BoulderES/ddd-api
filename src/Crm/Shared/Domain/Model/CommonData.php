@@ -27,6 +27,7 @@ class CommonData
     public function preUpdateHandler()
     {
         $this->updatedAt = UpdatedAt::fromString(date(DateTimeInterface::ATOM));
+        var_export($this->updatedAt->asString());
     }
 
     public function __construct(IsMain $isMain = null, IsActive $isActive = null, IsLocked $isLocked= null, Order $order = null)

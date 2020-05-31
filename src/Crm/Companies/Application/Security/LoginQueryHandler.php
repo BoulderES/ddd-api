@@ -33,29 +33,22 @@ class LoginQueryHandler implements QueryHandler
         $this->handle($loginCommand);
     }
 
-    public function handle(LoginQuery $loginCommand)
+    public function handle(LoginQuery $loginCommand): UserId
     {
-        $user = $this->userRepository->findOneBy(['username.value' => $loginCommand->getUsername()]);
+        $user = $this->userRepository->userByUsername($loginCommand->getUsername());
         if(!$user)
             ExceptionManager::throw('User not found! ' . get_called_class());
 
-
-        $uuid = new UserId($user->uuid());
-        $username = new Username($loginCommand->getUsername());
-        $hashedPassword = new Password($user->password());
-        $plainPassword = new Password($loginCommand->getPassword());
-
-
         if(!$this->passwordEncoder->isPasswordValid(
-            $uuid,
-            $username,
-            $hashedPassword,
-            $plainPassword
+            $user->uuid(),
+            $user->userName(),
+            $user->password(),
+            new Password($loginCommand->getPassword())
         ))
             ExceptionManager::throw('Wrong username/password! ' . get_called_class(), 401);
 
 
-        return $user;
+        return $user->uuid();
 
     }
 

@@ -4,11 +4,6 @@
         <id name="uuid" type="string" column="uuid">
             <generator strategy="NONE"/>
         </id>
-        <entity-listeners>
-            <entity-listener class="Company">
-                <lifecycle-callback type="preUpdate" method="preUpdateHandler"/>
-            </entity-listener>
-        </entity-listeners>
 
         <embedded name="numberOfPhones" class="Cuadrik\Crm\Companies\Domain\Company\NumberOfPhones" use-column-prefix="false" />
         <embedded name="numberOfAddresses" class="Cuadrik\Crm\Companies\Domain\Company\NumberOfAddresses" use-column-prefix="false" />
@@ -27,14 +22,13 @@
             </order-by>
         </one-to-many>
 
-        <!--        <unique-constraints>-->
-        <!--            <unique-constraint columns="uuid" name="search_company_idx" />-->
-        <!--        </unique-constraints>-->
-
-        <!--        <indexes>-->
-        <!--            <index name="username" columns="username"/>-->
-        <!--            <index columns="email"/>-->
-        <!--        </indexes>-->
+<!--        <unique-constraints>-->
+<!--            <unique-constraint columns="uuid" name="search_company_idx" />-->
+<!--        </unique-constraints>-->
+<!--        <indexes>-->
+<!--            <index name="username" columns="username"/>-->
+<!--            <index columns="email"/>-->
+<!--        </indexes>-->
 
 
     </entity>

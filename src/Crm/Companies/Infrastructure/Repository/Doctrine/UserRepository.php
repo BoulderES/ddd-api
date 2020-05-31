@@ -42,6 +42,19 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
 
     }
 
+    public function userByUsername(string $username): ?User
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.username.value = :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $qb;
+
+    }
+
     public function userByToken(string $token): ?User
     {
         $qb = $this->createQueryBuilder('u')

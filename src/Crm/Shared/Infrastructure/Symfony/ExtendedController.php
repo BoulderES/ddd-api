@@ -30,7 +30,7 @@ abstract class ExtendedController extends AbstractController
         $this->syncCommandBus   = $syncCommandBus;
     }
 
-    protected function query(Query $query): ?Response
+    protected function query(Query $query)
     {
         return $this->queryBus->query($query);
     }

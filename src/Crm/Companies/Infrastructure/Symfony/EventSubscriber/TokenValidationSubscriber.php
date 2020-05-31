@@ -64,8 +64,8 @@ class TokenValidationSubscriber implements EventSubscriberInterface
 
     private function needAuth(string $pathInfo): bool
     {
-//        return false;
-        return "/api/auth/" === substr( $pathInfo, 0, 10 );
+        return false;
+//        return "/api/auth/" === substr( $pathInfo, 0, 10 );
     }
 
     private function cleanTokenInjections($request)

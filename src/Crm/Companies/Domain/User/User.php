@@ -163,77 +163,76 @@ final class User extends AggregateRoot
         return $this;
     }
 
-    public function refreshToken(Token $token)
+    public function refreshToken(Token $token): User
     {
         $this->token = $token;
 
         return $this;
     }
 
-    public function token()
+    public function token(): Token
     {
-        return $this->token->value();
+        return $this->token;
     }
 
-    public function isActive()
+    public function isActive(): IsActive
     {
-        return $this->isActive->value();
+        return $this->isActive;
     }
 
-    public function isMain()
+    public function isMain(): IsMain
     {
-        return $this->isMain->value();
+        return $this->isMain;
     }
 
-    public function isLocked()
+    public function isLocked(): IsLocked
     {
-        return $this->isLocked->value();
+        return $this->isLocked;
     }
 
-    public function password()
+    public function password(): Password
     {
-        return $this->password->value();
+        return $this->password;
     }
 
-    public function uuid()
+    public function uuid(): UserId
     {
-        return $this->uuid;
+        return new UserId($this->uuid);
     }
 
-    public function username()
+    public function username(): Username
     {
-        return $this->username->value();
+        return $this->username;
     }
 
-    public function displayName()
+    public function displayName(): DisplayName
     {
-        return $this->firstName->value() . " " . $this->lastName->value();
+        return new DisplayName($this->firstName->value() . " " . $this->lastName->value());
     }
 
-    public function firstname()
+    public function firstname(): FirstName
     {
-        return $this->firstName->value();
+        return $this->firstName;
     }
 
-    public function lastname()
+    public function lastname(): LastName
     {
-        return $this->lastName->value();
+        return $this->lastName;
     }
 
-    public function email()
+    public function email(): Email
     {
-        return $this->email->value();
+        return $this->email;
     }
 
-    public function photoUrl()
+    public function photoUrl(): PhotoUrl
     {
-        return $this->photoUrl->value();
+        return $this->photoUrl;
     }
 
-    public function roles()
+    public function roles(): Roles
     {
-        return $this->roles->value();
+        return $this->roles;
     }
-
 
 }

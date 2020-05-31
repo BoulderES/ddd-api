@@ -9,6 +9,7 @@ use Cuadrik\Crm\Shared\Domain\Model\Token;
 use Cuadrik\Crm\Companies\Domain\User\TokenDecoderInterface;
 use Cuadrik\Crm\Companies\Domain\User\TokenEncoderInterface;
 use Cuadrik\Crm\Companies\Domain\User\UserRepositoryInterface;
+use Cuadrik\Crm\Shared\Domain\Model\UserId;
 use Cuadrik\Crm\Shared\Domain\Utils\Exceptions\ExceptionManager;
 
 class RefreshTokenCommandHandler implements CommandHandler
@@ -30,22 +31,27 @@ class RefreshTokenCommandHandler implements CommandHandler
         $this->handle($refreshToken);
     }
 
-    public function handle(RefreshTokenCommand $refreshToken)
+    public function handle(RefreshTokenCommand $refreshToken): UserId
     {
-        $user = $this->userRepository->userByToken($refreshToken->getToken());
+        $token = $this->tokenDecoder->decode($refreshToken->getToken());
+
+        $user = $this->userRepository->userByToken($token->value());
         if(!$user)
             ExceptionManager::throw('Unauthorized token. ' . get_called_class(), 401);
 
-        $uuid = $user->uuid();
-        $username = $user->username();
-        $password = $user->password();
-        $roles = $user->roles();
-
-        $token = new Token( $this->tokenEncoder->encodeToken( $uuid, $username, $password, $roles ) );
+        $token = new Token(
+            $this->tokenEncoder->encodeToken(
+                $user->uuid(),
+                $user->username(),
+                $user->password(),
+                $user->roles()
+            )
+        );
 
         $user->refreshToken($token);
 
         $this->userRepository->save($user);
 
+        return $user->uuid();
     }
 }
