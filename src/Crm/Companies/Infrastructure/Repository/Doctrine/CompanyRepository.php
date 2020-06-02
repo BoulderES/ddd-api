@@ -2,9 +2,9 @@
 
 namespace Cuadrik\Crm\Companies\Infrastructure\Repository\Doctrine;
 
-use Cuadrik\Crm\Companies\Domain\Company\Company;
-use Cuadrik\Crm\Companies\Domain\Company\CompanyRepositoryInterface;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Cuadrik\Crm\Companies\Domain\Company;
+use Cuadrik\Crm\Companies\Domain\CompanyRepositoryInterface;
+use Cuadrik\Crm\Shared\Infrastructure\Symfony\DoctrineRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -15,11 +15,13 @@ use Symfony\Component\Config\Definition\Exception\Exception;
  * @method Company[]    findAll()
  * @method Company[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CompanyRepository extends ServiceEntityRepository implements CompanyRepositoryInterface
+class CompanyRepository extends DoctrineRepository implements CompanyRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    protected string $repository_class = Company::class;
+
+    public function save(Company $company): void
     {
-        parent::__construct($registry, Company::class);
+        $this->persist($company);
     }
 
     public function findMainCompany()
@@ -58,13 +60,4 @@ class CompanyRepository extends ServiceEntityRepository implements CompanyReposi
 
     }
 
-    public function save(Company $user): void
-    {
-        try {
-            $this->_em->persist($user);
-            $this->_em->flush();
-        } catch (ORMException $e) {
-            throw new Exception('Record not saved: ' . $e->getMessage());
-        }
-    }
 }

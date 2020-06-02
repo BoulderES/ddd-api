@@ -6,12 +6,12 @@ declare(strict_types = 1);
 namespace Cuadrik\Apps\Crm\Api\Controller\User;
 
 
-use Cuadrik\Crm\Companies\Application\User\GetUserQuery;
-use Cuadrik\Crm\Companies\Application\User\GetUserQueryHandler;
+use Cuadrik\Crm\Users\Application\GetUserQuery;
+use Cuadrik\Crm\Users\Application\GetUserQueryHandler;
 use Cuadrik\Crm\Shared\Domain\Utils\Exceptions\ExceptionManager;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyQueryBus;
-use Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\TokenAuthenticatedController;
-use Cuadrik\Crm\Companies\Infrastructure\Projections\SPAUserProjector;
+use Cuadrik\Crm\Users\Infrastructure\Symfony\Service\TokenAuthenticatedController;
+use Cuadrik\Crm\Users\Infrastructure\Projections\SPAUserProjector;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\ExtendedController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;

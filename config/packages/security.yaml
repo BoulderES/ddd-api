@@ -1,6 +1,6 @@
 security:
     encoders:
-        Cuadrik\Crm\Companies\Infrastructure\Symfony\SecurityUser:
+        Cuadrik\Crm\Users\Infrastructure\Symfony\SecurityUser:
 #            algorithm: auto
             algorithm: bcrypt
             cost: 12

@@ -18,6 +18,14 @@ doctrine:
 #                dir: '%kernel.project_dir%/src/Crm/Companies/Domain'
                 prefix: 'Cuadrik\Crm\Companies\Domain'
                 alias: Companies
+            Users:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/config/mapping/orm/users'
+#                type: annotation
+#                dir: '%kernel.project_dir%/src/Crm/Users/Domain'
+                prefix: 'Cuadrik\Crm\Users\Domain'
+                alias: Companies
             Shared:
                 is_bundle: false
                 type: xml

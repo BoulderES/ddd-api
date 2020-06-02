@@ -34,9 +34,9 @@ abstract class ExtendedController extends AbstractController
         return $this->queryBus->query($query);
     }
 
-    protected function dispatchWithResponse(SyncCommand $command)
+    protected function dispatchSync(SyncCommand $command)
     {
-        return $this->syncCommandBus->dispatchWithResponse($command);
+        return $this->syncCommandBus->dispatchSync($command);
     }
 
     protected function dispatch(Command $command): void

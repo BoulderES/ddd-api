@@ -23,7 +23,7 @@ class SymfonySyncCommandBus implements SyncCommandBus
 
     }
 
-    public function dispatchWithResponse(Command $command)
+    public function dispatchSync(Command $command)
     {
         $filesystem = new Filesystem();
         $filesystem->appendToFile('/var/www/html/public/logs/SymfonySyncCommandBus.log', '/var/www/html/logs/MessageBusInterface'.date("Y-m-d H:i:s")."\n".date("Y-m-d H:i:s")."\n"."\n"."\n"."\n"."\n");
@@ -34,7 +34,7 @@ class SymfonySyncCommandBus implements SyncCommandBus
             $stamp = $this->commandBus->dispatch($command)->last(HandledStamp::class);
             return $stamp->getResult();
         } catch (\Exception $unused) {
-            throw new \Exception($command);
+            throw new \Exception($unused->getMessage());
         }
     }
 

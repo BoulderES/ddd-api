@@ -2,9 +2,9 @@
 
 namespace Cuadrik\Tests\User;
 
-use Cuadrik\Crm\Companies\Application\Security\SignInQuery;
-use Cuadrik\Crm\Companies\Application\User\CreateRegularUserCommand;
-use Cuadrik\Crm\Companies\Application\User\GetUserQuery;
+use Cuadrik\Crm\Users\Application\SignInQuery;
+use Cuadrik\Crm\Users\Application\CreateRegularUserCommand;
+use Cuadrik\Crm\Users\Application\GetUserQuery;
 use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
 use Cuadrik\Crm\Shared\Domain\Model\UserId;
 
@@ -25,9 +25,9 @@ class RegularUserCreationTest extends KernelTestCase
 //        $this->commandBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\SyncCommand\CommandBus');
 //        $this->queryBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\Query\QueryBus');
 //        $this->bus = self::$container->get('Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus.php');
-//        $this->tokenDecoder = self::$container->get('Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\JWTDecodeToken');
-        $this->createUserCommandHandler = self::$container->get('Cuadrik\Crm\Companies\Application\User\CreateRegularUserCommandHandler');
-        $this->getUserQueryHandler = self::$container->get('Cuadrik\Crm\Companies\Application\User\GetUserQueryHandler');
+//        $this->tokenDecoder = self::$container->get('Cuadrik\Crm\Users\Infrastructure\Symfony\Service\JWTDecodeToken');
+        $this->createUserCommandHandler = self::$container->get('Cuadrik\Crm\Users\Application\User\CreateRegularUserCommandHandler');
+        $this->getUserQueryHandler = self::$container->get('Cuadrik\Crm\Users\Application\GetUserQueryHandler');
     }
 
     /**

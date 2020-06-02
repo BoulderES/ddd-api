@@ -23,13 +23,9 @@ class SymfonyCommandBus implements CommandBus
 
     }
 
-    public function dispatch(Command $command, array $stamps = []): void
+    public function dispatch(Command $command): void
     {
-        $filesystem = new Filesystem();
-        $filesystem->appendToFile('/var/www/html/public/logs/SymfonyCommandBus.log', '/var/www/html/logs/MessageBusInterface'.date("Y-m-d H:i:s")."\n".date("Y-m-d H:i:s")."\n"."\n"."\n"."\n"."\n");
-
         $this->commandBus->dispatch($command);
-
     }
 
 }

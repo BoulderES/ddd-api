@@ -28,7 +28,7 @@ services:
 
     # jwt_creation_listener that should complete the token information
     cuadrik.event.jwt_created_listener:
-        class: Cuadrik\Crm\Companies\Infrastructure\Symfony\EventListener\JWTCreatedListener
+        class: Cuadrik\Crm\Users\Infrastructure\Symfony\EventListener\JWTCreatedListener
         arguments: [ '@request_stack' ]
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
@@ -49,20 +49,19 @@ services:
             - { name: kernel.event_listener, event: kernel.exception, method: onException }
 
     # Used for tests
-    Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\JWTDecodeToken:
+    Cuadrik\Crm\Users\Infrastructure\Symfony\Service\JWTDecodeToken:
         public: true
 
 
-
 #    user_create_command_handlers:
-#        namespace: Cuadrik\Crm\Companies\Application\User\
+#        namespace: Cuadrik\Crm\Users\Application\User\
 #        resource: '%kernel.project_dir%/src/Crm/Application/User/*Handler.php'
 #        autoconfigure: false
 #        tags:
 #            - { name: messenger.message_handler, bus: command.bus }
 #
 #    user_login_query_handlers:
-#        namespace: Cuadrik\Crm\Companies\Application\Security\
+#        namespace: Cuadrik\Crm\Users\Application\
 #        resource: '%kernel.project_dir%/src/Crm/Application/Security/*Handler.php'
 #        autoconfigure: false
 #        tags:

@@ -6,9 +6,9 @@ declare(strict_types = 1);
 namespace Cuadrik\Apps\Crm\Api\Controller\Security;
 
 
-use Cuadrik\Crm\Companies\Application\Security\SignInQuery;
-use Cuadrik\Crm\Companies\Application\Security\SignInQueryHandler;
-use Cuadrik\Crm\Companies\Infrastructure\Projections\SPAUserProjector;
+use Cuadrik\Crm\Users\Application\SignInQuery;
+use Cuadrik\Crm\Users\Application\SignInQueryHandler;
+use Cuadrik\Crm\Users\Infrastructure\Projections\SPAUserProjector;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\ExtendedController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;

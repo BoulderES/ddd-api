@@ -44,8 +44,8 @@ framework:
         routing:
             # Route your messages to the transports
             # 'Cuadrik\Message\YourMessage': async
-            'Cuadrik\Crm\Shared\Domain\Bus\Command\Command': asyncCommand
-            'Cuadrik\Crm\Shared\Domain\Bus\Command\SyncCommand': sync
+            'Cuadrik\Crm\Shared\Domain\Bus\Command\Command': sync
+            'Cuadrik\Crm\Shared\Domain\Bus\Command\SyncCommand': syncCommand
             'Cuadrik\Crm\Shared\Domain\Bus\Query\Query': query
             'Cuadrik\Crm\Shared\Domain\Bus\Event\DomainEvent': domainEvent
 

@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace Cuadrik\Apps\Crm\Api\Controller\User;
 
-use Cuadrik\Crm\Companies\Application\User\UpdateUserCommand;
-use Cuadrik\Crm\Companies\Application\User\UpdateUserCommandHandler;
+use Cuadrik\Crm\Users\Application\UpdateUserCommand;
+use Cuadrik\Crm\Users\Application\UpdateUserCommandHandler;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus;
-use Cuadrik\Crm\Companies\Infrastructure\Symfony\Service\TokenAuthenticatedController;
+use Cuadrik\Crm\Users\Infrastructure\Symfony\Service\TokenAuthenticatedController;
 use Cuadrik\Crm\Shared\Infrastructure\Symfony\ExtendedController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -8,6 +8,6 @@ use Cuadrik\Crm\Shared\Domain\Bus\Command\SyncCommand as Command;
 
 interface SyncCommandBus
 {
-    public function dispatchWithResponse(Command $command);
+    public function dispatchSync(Command $command);
 
 }
