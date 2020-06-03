@@ -7,7 +7,7 @@ namespace Cuadrik\Crm\Users\Domain;
 
 use Cuadrik\Crm\Shared\Domain\Bus\Event\DomainEvent;
 
-final class UserCreatedDomainEvent extends DomainEvent
+final class UserWasCreatedDomainEvent extends DomainEvent
 {
     private string $username;
 
@@ -24,7 +24,7 @@ final class UserCreatedDomainEvent extends DomainEvent
 
     public function __toString()
     {
-        return "UserCreatedDomainEvent";
+        return "UserWasCreatedDomainEvent";
         // TODO: Implement __toString() method.
     }
 

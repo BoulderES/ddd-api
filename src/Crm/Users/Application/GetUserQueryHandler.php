@@ -28,7 +28,7 @@ final class GetUserQueryHandler implements QueryHandler
 
     public function handle(GetUserQuery $getUserQuery): User
     {
-        $user = $this->userRepository->userByUuid($getUserQuery->getUuid());
+        $user = $this->userRepository->userWithUuid($getUserQuery->getUuid());
 
         if(!$user)
             ExceptionManager::throw('User not found! ' . get_called_class());

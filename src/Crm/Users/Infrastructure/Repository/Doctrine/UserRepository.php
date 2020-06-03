@@ -89,7 +89,7 @@ class UserRepository  extends DoctrineRepository implements UserRepositoryInterf
 
     }
 
-    public function userByUuid(string $uuid): ?User
+    public function userWithUuid(string $uuid): ?User
     {
         $qb = $this->createQueryBuilder('u')
             ->where('u.uuid = :uuid')

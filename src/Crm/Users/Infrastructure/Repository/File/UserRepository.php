@@ -30,7 +30,7 @@ class UserRepository //implements UserRepositoryInterface
     }
 
 
-    public function userByUuid($obj)
+    public function userWithUuid($obj)
     {
         $filePath = '/var/www/html/public/persistence/object'.$obj.'.txt';
         if (file_exists($filePath)){

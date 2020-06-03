@@ -138,7 +138,7 @@ final class User extends AggregateRoot
         $eventId = Uuid::random()->value();
         $occurredOn = Utils::dateToString(new DateTimeImmutable());
 
-        $user->record(new UserCreatedDomainEvent($uuid->value(), $username->value(),$eventId,$occurredOn));
+        $user->record(new UserWasCreatedDomainEvent($uuid->value(), $username->value(),$eventId,$occurredOn));
 
         return $user;
 

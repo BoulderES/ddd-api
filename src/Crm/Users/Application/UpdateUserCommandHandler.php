@@ -48,7 +48,7 @@ final class UpdateUserCommandHandler implements CommandHandler
 
     public function handle(UpdateUserCommand $updateUserCommand): User
     {
-        $user = $this->userRepository->userByUuid($updateUserCommand->getUuid());
+        $user = $this->userRepository->userWithUuid($updateUserCommand->getUuid());
 
         if(!$user)
             ExceptionManager::throw('User not found! ' . get_called_class());
