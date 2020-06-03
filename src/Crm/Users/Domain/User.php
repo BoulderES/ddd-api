@@ -14,9 +14,6 @@ use Cuadrik\Crm\Shared\Domain\Model\UserId;
 use Cuadrik\Crm\Shared\Domain\Model\IsMain;
 use Cuadrik\Crm\Shared\Domain\Model\IsLocked;
 use Cuadrik\Crm\Shared\Domain\Model\Order;
-use Cuadrik\Crm\Shared\Domain\Utils\Utils;
-use Cuadrik\Crm\Shared\Domain\ValueObject\Uuid;
-use DateTimeImmutable;
 
 final class User extends AggregateRoot
 {
@@ -135,10 +132,7 @@ final class User extends AggregateRoot
         $user->isActive         = $isActive;
         $user->isLocked         = $isLocked;
 
-        $eventId = Uuid::random()->value();
-        $occurredOn = Utils::dateToString(new DateTimeImmutable());
-
-        $user->record(new UserWasCreatedDomainEvent($uuid->value(), $username->value(),$eventId,$occurredOn));
+        $user->record(new UserWasCreatedDomainEvent($uuid->value(), $username->value(), $companyId->value()));
 
         return $user;
 

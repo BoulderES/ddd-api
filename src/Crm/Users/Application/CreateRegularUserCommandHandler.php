@@ -34,7 +34,7 @@ final class CreateRegularUserCommandHandler implements CommandHandler
     public function __construct( UserRepositoryInterface $userRepository, CompanyBootstraping $companyBootstraping, PasswordEncoder $passwordEncoder, TokenEncoderInterface $tokenEncoder, EventBus $bus )
     {
         $this->userRepository       = $userRepository;
-        $this->companyBootstraping   = $companyBootstraping;
+        $this->companyBootstraping  = $companyBootstraping;
         $this->passwordEncoder      = $passwordEncoder;
         $this->tokenEncoder         = $tokenEncoder;
         $this->bus                  = $bus;
@@ -50,7 +50,7 @@ final class CreateRegularUserCommandHandler implements CommandHandler
         if("" === $createUserCommand->getPassword())
             ExceptionManager::throw('Password can not be empty. ' . get_called_class());
 
-        if(null === $this->userRepository->userWithUuid($createUserCommand->getUuid()))
+        if(null !== $this->userRepository->userWithUuid($createUserCommand->getUuid()))
             ExceptionManager::throw('User already exist. ' . get_called_class());
 
         $uuid       = new UserId($createUserCommand->getUuid());
@@ -62,8 +62,8 @@ final class CreateRegularUserCommandHandler implements CommandHandler
         $companyId  = new CompanyId($createUserCommand->getCompanyUuid());
 //        $companyId  = new CompanyId('094b0f4d-5abe-44bb-813a-a8f84812b919');
 
-        // TODO possible refactorization...
-        $this->companyBootstraping->handle($companyId);
+        // TODO possible refactorization... (domain event implemented to create the related company)
+//        $this->companyBootstraping->handle($companyId);
 
         $user = User::regularUserCreator( $uuid, $companyId, $username, $password, $email, $token, $roles );
 

@@ -6,20 +6,22 @@ namespace Cuadrik\Crm\Users\Domain;
 
 
 use Cuadrik\Crm\Shared\Domain\Bus\Event\DomainEvent;
+use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
 
 final class UserWasCreatedDomainEvent extends DomainEvent
 {
     private string $username;
+    private string $companyId;
 
     public function __construct(
         string $uuid,
         string $username,
-        string $eventId = null,
-        string $occurredOn = null
+        string $companyId
     ) {
-        parent::__construct($uuid, $eventId, $occurredOn);
+        parent::__construct($uuid);
 
         $this->username = $username;
+        $this->companyId = $companyId;
     }
 
     public function __toString()
@@ -36,7 +38,8 @@ final class UserWasCreatedDomainEvent extends DomainEvent
     public function toPrimitives(): array
     {
         return [
-            'username'  => $this->username
+            'username'  => $this->username,
+            'companyId'  => $this->companyId
         ];
     }
 
@@ -46,11 +49,16 @@ final class UserWasCreatedDomainEvent extends DomainEvent
         string $eventId,
         string $occurredOn
     ): DomainEvent {
-        return new self($aggregateId, $body['username'], $eventId, $occurredOn);
+        return new self($aggregateId, $body['username'], $body['companyId'], $eventId, $occurredOn);
     }
 
     public function username(): string
     {
         return $this->username;
+    }
+
+    public function companyId(): string
+    {
+        return $this->companyId;
     }
 }

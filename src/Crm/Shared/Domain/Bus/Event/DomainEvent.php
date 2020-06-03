@@ -14,11 +14,11 @@ abstract class DomainEvent
     private string $eventId;
     private string $occurredOn;
 
-    public function __construct(string $aggregateId, string $eventId = null, string $occurredOn = null)
+    public function __construct(string $aggregateId)
     {
         $this->aggregateId = $aggregateId;
-        $this->eventId     = $eventId ?: Uuid::random()->value();
-        $this->occurredOn  = $occurredOn ?: Utils::dateToString(new DateTimeImmutable());
+        $this->eventId     = Uuid::random()->value();
+        $this->occurredOn  = Utils::dateToString(new DateTimeImmutable());
     }
 
     abstract public function toPrimitives(): array;
