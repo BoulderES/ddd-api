@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Cuadrik\Crm\Shared\Infrastructure\Symfony;
+namespace Cuadrik\Crm\Shared\Infrastructure\Persistence;
 
 use Cuadrik\Crm\Shared\Domain\Aggregate\AggregateRoot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

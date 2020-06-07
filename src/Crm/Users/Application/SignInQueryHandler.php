@@ -12,20 +12,24 @@ use Cuadrik\Crm\Users\Domain\Username;
 use Cuadrik\Crm\Users\Domain\UserRepositoryInterface;
 use Cuadrik\Crm\Shared\Domain\Model\UserId;
 use Cuadrik\Crm\Shared\Domain\Utils\Exceptions\ExceptionManager;
+use Cuadrik\Crm\Users\Infrastructure\Repository\EventSourcing\UserRepository;
 
 class SignInQueryHandler implements QueryHandler
 {
 
     private UserRepositoryInterface $userRepository;
     private PasswordEncoder $passwordEncoder;
+    private UserRepository $userEventStoreRepository;
 
     public function __construct(
         UserRepositoryInterface $userRepository,
-        PasswordEncoder $passwordEncoder
+        PasswordEncoder $passwordEncoder,
+        UserRepository $userEventStoreRepository
     )
     {
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
+        $this->userEventStoreRepository = $userEventStoreRepository;
     }
 
     public function __invoke(SignInQuery $signInQuery): void
@@ -47,6 +51,9 @@ class SignInQueryHandler implements QueryHandler
         ))
             ExceptionManager::throw('Wrong username/password! ' . get_called_class(), 401);
 
+        $user->doSignIn();
+
+        $this->userEventStoreRepository->save($user);
 
         return $user->uuid();
 

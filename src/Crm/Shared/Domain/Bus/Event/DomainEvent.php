@@ -7,11 +7,26 @@ namespace Cuadrik\Crm\Shared\Domain\Bus\Event;
 use Cuadrik\Crm\Shared\Domain\Utils\Utils;
 use Cuadrik\Crm\Shared\Domain\ValueObject\Uuid;
 use DateTimeImmutable;
+use JMS\Serializer\Annotation\Type;
 
 abstract class DomainEvent
 {
+    /**
+     * @var string
+     * @Type("string")
+     */
     private string $aggregateId;
+
+    /**
+     * @var string
+     * @Type("string")
+     */
     private string $eventId;
+
+    /**
+     * @var string
+     * @Type("string")
+     */
     private string $occurredOn;
 
     public function __construct(string $aggregateId)

@@ -132,12 +132,18 @@ final class User extends AggregateRoot
         $user->isActive         = $isActive;
         $user->isLocked         = $isLocked;
 
-        $user->record(new UserWasCreatedDomainEvent($uuid->value(), $username->value(), $companyId->value()));
+        $user->recordThat(new UserWasCreatedDomainEvent($uuid->value(), $username->value(), $companyId->value()));
 
         return $user;
 
     }
 
+    public function doSignIn()
+    {
+
+        $this->recordThat(new UserDidSignInDomainEvent($this->uuid, $this->username->value(), $this->companyId->value()));
+
+    }
     public function update(
         Username $username,
         Password $password,
@@ -229,6 +235,19 @@ final class User extends AggregateRoot
     public function roles(): Roles
     {
         return $this->roles;
+    }
+
+    protected function applyUserWasCreatedDomainEvent(
+        UserWasCreatedDomainEvent $event
+    ) {
+        $this->username  = new Username($event->username());
+        $this->companyId = new CompanyId($event->companyId());
+    }
+
+    protected function applyUserWasRenamedDomainEvent(
+        UserWasRenamedDomainEvent $event
+    ) {
+        $this->username = new Username($event->username());
     }
 
 }

@@ -7,7 +7,7 @@ namespace Cuadrik\Crm\Users\Infrastructure\Repository\Doctrine;
 
 use Cuadrik\Crm\Companies\Domain\Company;
 use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
-use Cuadrik\Crm\Shared\Infrastructure\Symfony\DoctrineRepository;
+use Cuadrik\Crm\Shared\Infrastructure\Persistence\DoctrineRepository;
 use Cuadrik\Crm\Users\Domain\User;
 use Cuadrik\Crm\Users\Domain\UserRepositoryInterface;
 

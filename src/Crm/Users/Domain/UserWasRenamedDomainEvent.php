@@ -9,7 +9,7 @@ use Cuadrik\Crm\Shared\Domain\Bus\Event\DomainEvent;
 use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
 use JMS\Serializer\Annotation\Type;
 
-final class UserWasCreatedDomainEvent extends DomainEvent
+final class UserWasRenamedDomainEvent extends DomainEvent
 {
 
     /**
@@ -18,39 +18,30 @@ final class UserWasCreatedDomainEvent extends DomainEvent
      */
     private string $username;
 
-    /**
-     * @var string
-     * @Type("string")
-     */
-    private string $companyId;
-
     public function __construct(
         string $uuid,
-        string $username,
-        string $companyId
+        string $username
     ) {
         parent::__construct($uuid);
 
         $this->username = $username;
-        $this->companyId = $companyId;
     }
 
     public function __toString()
     {
-        return "UserWasCreatedDomainEvent";
+        return "UserWasRenamedDomainEvent";
         // TODO: Implement __toString() method.
     }
 
     public static function eventName(): string
     {
-        return 'user.created';
+        return 'user.renamed';
     }
 
     public function toPrimitives(): array
     {
         return [
-            'username'  => $this->username,
-            'companyId'  => $this->companyId
+            'username'  => $this->username
         ];
     }
 
@@ -60,17 +51,12 @@ final class UserWasCreatedDomainEvent extends DomainEvent
         string $eventId,
         string $occurredOn
     ): DomainEvent {
-        return new self($aggregateId, $body['username'], $body['companyId']);
+        return new self($aggregateId, $body['username']);
     }
 
     public function username(): string
     {
         return $this->username;
-    }
-
-    public function companyId(): string
-    {
-        return $this->companyId;
     }
 
 }

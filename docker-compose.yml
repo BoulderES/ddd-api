@@ -1,0 +1,178 @@
+version: '3'
+services:
+
+  # PHP Runtime Service
+  cqrs_php_runtime:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    image: php:7.4.6-fpm-alpine3.11
+    container_name: cqrs_php_runtime
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: cqrs_php_runtime
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/conf.d/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - cqrs-network
+
+  # Nginx Service
+  cqrs_nginx_webserver:
+    image: nginx:alpine
+    container_name: cqrs_nginx_webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8080:80"
+      - "4430:443"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - cqrs-network
+
+  cqrs_mongo_read_model_db:
+    image: mongo:3.4.22-xenial
+    container_name: cqrs_mongo_read_model_db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8081:8081"
+    environment:
+      MONGO_INITDB_DATABASE: cqrs_read_model_db
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+      SERVICE_NAME: cqrs_mongo_read_model_db
+      SERVICE_TAGS: dev
+    volumes:
+      - mongo-read-model-data:/data/db
+    networks:
+      - cqrs-network
+
+  cqrs_mongo_client_container:
+    image: mongoclient/mongoclient:4.0.0
+    container_name: cqrs_mongo_client_container
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3999:3000"
+    networks:
+      - cqrs-network
+
+  cqrs_postgres_app_db:
+    image: postgres:11-alpine
+    container_name: cqrs_postgres_app_db
+    restart: unless-stopped
+    tty: true
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: default
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-app-data:/var/lib/postgresql/data
+    networks:
+      - cqrs-network
+
+  cqrs_postgres_event_store_db:
+    image: postgres:11-alpine
+    container_name: cqrs_postgres_event_store_db
+    restart: unless-stopped
+    tty: true
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: default
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres-event-store-data:/var/lib/postgresql/data
+    networks:
+      - cqrs-network
+
+  cqrs_rabbitmq:
+    image: 'rabbitmq:3.6-management-alpine'
+    container_name: cqrs_rabbitmq
+    restart: unless-stopped
+    tty: true
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: 12345678
+    ports:
+      # The standard AMQP protocol port
+      - "5672:5672"
+      # HTTP management UI
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia
+      - rabbitmq_log:/var/log/rabbitmq
+    networks:
+      - cqrs-network
+
+  cqrs_redis:
+    build:
+      context: .
+      dockerfile: docker/redis/Dockerfile
+    image: redis:alpine
+    container_name: cqrs_redis
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    entrypoint: redis-server # --appendonly yes
+
+  cqrs_redisinsight:
+    image: redislabs/redisinsight:1.5.0
+    container_name: cqrs_redisinsight
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "32787:8001"
+    volumes:
+      - redis-insight:/db
+
+  cqrs_elasticsearch:
+    image: sebp/elk
+    container_name: cqrs_elasticsearch
+    restart: unless-stopped
+    tty: true
+    ports:
+      # kibana
+      - "5601:5601"
+      # elasticsearch
+      - "9200:9200"
+      # logstash
+      - "5044:5044"
+    volumes:
+      - elk-data:/var/lib/elasticsearch
+
+# Docker Networks
+networks:
+  cqrs-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  mongo-read-model-data:
+#    driver: local
+  postgres-event-store-data:
+#    driver: local
+  postgres-app-data:
+#    driver: local
+  rabbitmq_data:
+#    driver: local
+  rabbitmq_log:
+#    driver: local
+  redis-insight:
+#    driver: local
+  redis-data:
+#    driver: local
+  elk-data:
+#    driver: local

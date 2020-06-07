@@ -52,6 +52,9 @@ services:
     Cuadrik\Crm\Users\Infrastructure\Symfony\Service\JWTDecodeToken:
         public: true
 
+    Cuadrik\Crm\Shared\Infrastructure\EventStore\EventStore:
+        public: true
+
 
 #    user_create_command_handlers:
 #        namespace: Cuadrik\Crm\Users\Application\User\

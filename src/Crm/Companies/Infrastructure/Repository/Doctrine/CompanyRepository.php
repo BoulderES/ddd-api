@@ -4,7 +4,7 @@ namespace Cuadrik\Crm\Companies\Infrastructure\Repository\Doctrine;
 
 use Cuadrik\Crm\Companies\Domain\Company;
 use Cuadrik\Crm\Companies\Domain\CompanyRepositoryInterface;
-use Cuadrik\Crm\Shared\Infrastructure\Symfony\DoctrineRepository;
+use Cuadrik\Crm\Shared\Infrastructure\Persistence\DoctrineRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\Config\Definition\Exception\Exception;

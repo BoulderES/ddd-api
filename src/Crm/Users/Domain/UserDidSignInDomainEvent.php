@@ -9,7 +9,7 @@ use Cuadrik\Crm\Shared\Domain\Bus\Event\DomainEvent;
 use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
 use JMS\Serializer\Annotation\Type;
 
-final class UserWasCreatedDomainEvent extends DomainEvent
+final class UserDidSignInDomainEvent extends DomainEvent
 {
 
     /**
@@ -37,13 +37,13 @@ final class UserWasCreatedDomainEvent extends DomainEvent
 
     public function __toString()
     {
-        return "UserWasCreatedDomainEvent";
+        return "UserDidSignInDomainEvent";
         // TODO: Implement __toString() method.
     }
 
     public static function eventName(): string
     {
-        return 'user.created';
+        return 'user.signedUp';
     }
 
     public function toPrimitives(): array

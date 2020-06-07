@@ -18,6 +18,7 @@ use Cuadrik\Crm\Users\Domain\Roles;
 use Cuadrik\Crm\Shared\Domain\Model\Token;
 use Cuadrik\Crm\Users\Domain\Username;
 use Cuadrik\Crm\Users\Domain\UserRepositoryInterface;
+use Cuadrik\Crm\Users\Infrastructure\Repository\EventSourcing\UserRepository;
 use Cuadrik\Crm\Shared\Domain\Utils\Exceptions\ExceptionManager;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -30,14 +31,16 @@ final class CreateRegularUserCommandHandler implements CommandHandler
     private PasswordEncoder         $passwordEncoder;
     private TokenEncoderInterface   $tokenEncoder;
     private EventBus                $bus;
+    private UserRepository          $userEventStoreRepository;
 
-    public function __construct( UserRepositoryInterface $userRepository, CompanyBootstraping $companyBootstraping, PasswordEncoder $passwordEncoder, TokenEncoderInterface $tokenEncoder, EventBus $bus )
+    public function __construct( UserRepositoryInterface $userRepository, CompanyBootstraping $companyBootstraping, PasswordEncoder $passwordEncoder, TokenEncoderInterface $tokenEncoder, EventBus $bus, UserRepository $userEventStoreRepository )
     {
-        $this->userRepository       = $userRepository;
-        $this->companyBootstraping  = $companyBootstraping;
-        $this->passwordEncoder      = $passwordEncoder;
-        $this->tokenEncoder         = $tokenEncoder;
-        $this->bus                  = $bus;
+        $this->userRepository           = $userRepository;
+        $this->companyBootstraping      = $companyBootstraping;
+        $this->passwordEncoder          = $passwordEncoder;
+        $this->tokenEncoder             = $tokenEncoder;
+        $this->bus                      = $bus;
+        $this->userEventStoreRepository = $userEventStoreRepository;
     }
 
     public function __invoke(CreateRegularUserCommand $createUserCommand): void
@@ -68,12 +71,12 @@ final class CreateRegularUserCommandHandler implements CommandHandler
         $user = User::regularUserCreator( $uuid, $companyId, $username, $password, $email, $token, $roles );
 
         $this->userRepository->save($user);
+        $this->userEventStoreRepository->save($user);
 
-        $filesystem = new Filesystem();
-        $filesystem->appendToFile('/var/www/html/public/logs/CreateRegularUserCommandHandler.log', '/var/www/html/logs/SymfonyEventBus'.date("Y-m-d H:i:s")."\n".date("Y-m-d H:i:s")."\n"."\n"."\n"."\n"."\n");
+//        $filesystem = new Filesystem();
+//        $filesystem->appendToFile('/var/www/html/public/logs/CreateRegularUserCommandHandler.log', '/var/www/html/logs/SymfonyEventBus'.date("Y-m-d H:i:s")."\n".date("Y-m-d H:i:s")."\n"."\n"."\n"."\n"."\n");
 
-        $this->bus->publish(...$user->pullDomainEvents());
-
+//        $this->bus->publish(...$user->pullDomainEvents());
         return $user;
     }
 
