@@ -1,6 +1,6 @@
 doctrine:
     dbal:
-        url: '%env(resolve:APP_DATABASE_URL)%'
+        url: '%env(resolve:APP_DATABASE_DNS)%'
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
@@ -15,22 +15,22 @@ doctrine:
                 type: xml
                 dir: '%kernel.project_dir%/config/mapping/orm/companies'
 #                type: annotation
-#                dir: '%kernel.project_dir%/src/Crm/Companies/Domain'
-                prefix: 'Cuadrik\Crm\Companies\Domain'
+#                dir: '%kernel.project_dir%/src/Backoffice/Companies/Domain'
+                prefix: 'Cuadrik\Backoffice\Companies\Domain'
                 alias: Companies
             Users:
                 is_bundle: false
                 type: xml
                 dir: '%kernel.project_dir%/config/mapping/orm/users'
 #                type: annotation
-#                dir: '%kernel.project_dir%/src/Crm/Users/Domain'
-                prefix: 'Cuadrik\Crm\Users\Domain'
+#                dir: '%kernel.project_dir%/src/Backoffice/Users/Domain'
+                prefix: 'Cuadrik\Backoffice\Users\Domain'
                 alias: Companies
             Shared:
                 is_bundle: false
                 type: xml
                 dir: '%kernel.project_dir%/config/mapping/orm/shared'
 #                type: annotation
-#                dir: '%kernel.project_dir%/src/Crm/Shared/Domain'
-                prefix: 'Cuadrik\Crm\Shared\Domain'
+#                dir: '%kernel.project_dir%/src/Backoffice/Shared/Domain'
+                prefix: 'Cuadrik\Shared\Domain'
                 alias: Shared

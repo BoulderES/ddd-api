@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="Cuadrik\Crm\Companies\Domain\Company" table="companies">
+    <entity name="Cuadrik\Backoffice\Companies\Domain\Company" table="companies">
         <id name="uuid" type="string" column="uuid">
             <generator strategy="NONE"/>
         </id>
 
-        <embedded name="numberOfPhones" class="Cuadrik\Crm\Companies\Domain\NumberOfPhones" use-column-prefix="false" />
-        <embedded name="numberOfAddresses" class="Cuadrik\Crm\Companies\Domain\NumberOfAddresses" use-column-prefix="false" />
-        <embedded name="numberOfBankAccounts" class="Cuadrik\Crm\Companies\Domain\NumberOfBankAccounts" use-column-prefix="false" />
-        <embedded name="invoiceNumeratorDebit" class="Cuadrik\Crm\Companies\Domain\InvoiceNumeratorDebit" use-column-prefix="false" />
-        <embedded name="invoiceNumeratorCredit" class="Cuadrik\Crm\Companies\Domain\InvoiceNumeratorCredit" use-column-prefix="false" />
-        <embedded name="invoiceNumeratorDebitPrefix" class="Cuadrik\Crm\Companies\Domain\InvoiceNumeratorDebitPrefix" use-column-prefix="false" />
-        <embedded name="invoiceNumeratorCreditPrefix" class="Cuadrik\Crm\Companies\Domain\InvoiceNumeratorCreditPrefix" use-column-prefix="false" />
+        <embedded name="numberOfPhones" class="Cuadrik\Backoffice\Companies\Domain\NumberOfPhones" use-column-prefix="false" />
+        <embedded name="numberOfAddresses" class="Cuadrik\Backoffice\Companies\Domain\NumberOfAddresses" use-column-prefix="false" />
+        <embedded name="numberOfBankAccounts" class="Cuadrik\Backoffice\Companies\Domain\NumberOfBankAccounts" use-column-prefix="false" />
+        <embedded name="invoiceNumeratorDebit" class="Cuadrik\Backoffice\Companies\Domain\InvoiceNumeratorDebit" use-column-prefix="false" />
+        <embedded name="invoiceNumeratorCredit" class="Cuadrik\Backoffice\Companies\Domain\InvoiceNumeratorCredit" use-column-prefix="false" />
+        <embedded name="invoiceNumeratorDebitPrefix" class="Cuadrik\Backoffice\Companies\Domain\InvoiceNumeratorDebitPrefix" use-column-prefix="false" />
+        <embedded name="invoiceNumeratorCreditPrefix" class="Cuadrik\Backoffice\Companies\Domain\InvoiceNumeratorCreditPrefix" use-column-prefix="false" />
 
-<!--        <one-to-many field="users" target-entity="Cuadrik\Crm\Users\Domain\User" mapped-by="company">-->
+<!--        <one-to-many field="users" target-entity="Cuadrik\Backoffice\Users\Domain\User" mapped-by="company">-->
 <!--            <cascade>-->
 <!--                <cascade-persist/>-->
 <!--            </cascade>-->

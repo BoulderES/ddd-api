@@ -5,7 +5,7 @@ services:
   cqrs_php_runtime:
     build:
       context: .
-      dockerfile: docker/php/Dockerfile
+      dockerfile: ./docker/php/Dockerfile
     image: php:7.4.6-fpm-alpine3.11
     container_name: cqrs_php_runtime
     restart: unless-stopped
@@ -117,7 +117,7 @@ services:
   cqrs_redis:
     build:
       context: .
-      dockerfile: docker/redis/Dockerfile
+      dockerfile: ./docker/redis/Dockerfile
     image: redis:alpine
     container_name: cqrs_redis
     restart: unless-stopped

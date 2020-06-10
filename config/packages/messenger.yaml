@@ -25,29 +25,29 @@ framework:
                 dsn: 'sync://'
                 #                serializer: messenger.transport.symfony_serializer
             async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                dsn: '%env(RABBITMQ_TRANSPORT_DSN)%'
                 #                serializer: messenger.transport.symfony_serializer
             syncCommand:
                 dsn: 'sync://'
                 #                serializer: messenger.transport.symfony_serializer
             asyncCommand:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                dsn: '%env(RABBITMQ_TRANSPORT_DSN)%'
 #                serializer: messenger.transport.symfony_serializer
             query:
                 dsn: 'sync://'
 #                serializer: messenger.transport.symfony_serializer
             domainEvent:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                dsn: '%env(RABBITMQ_TRANSPORT_DSN)%'
 #                serializer: messenger.transport.symfony_serializer
             failed: 'doctrine://default?queue_name=failed'
 
         routing:
             # Route your messages to the transports
             # 'Cuadrik\Message\YourMessage': async
-            'Cuadrik\Crm\Shared\Domain\Bus\Command\Command': sync
-            'Cuadrik\Crm\Shared\Domain\Bus\Command\SyncCommand': sync
-            'Cuadrik\Crm\Shared\Domain\Bus\Query\Query': sync
-            'Cuadrik\Crm\Shared\Domain\Bus\Event\DomainEvent': sync
+            'Cuadrik\Shared\Domain\Bus\Command\Command': sync
+            'Cuadrik\Shared\Domain\Bus\Command\SyncCommand': sync
+            'Cuadrik\Shared\Domain\Bus\Query\Query': sync
+            'Cuadrik\Shared\Domain\Bus\Event\DomainEvent': sync
 
 
 

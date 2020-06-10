@@ -37,7 +37,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Cuadrik\\Apps\\Crm\\Api\\": "apps/crm/api/src",
+            "Cuadrik\\Apps\\Backoffice\\Api\\": "apps/backoffice/api/src",
             "Cuadrik\\": "src/"
         }
     },

@@ -2,11 +2,11 @@
 
 namespace Cuadrik\Tests\User;
 
-use Cuadrik\Crm\Users\Application\SignInQuery;
-use Cuadrik\Crm\Users\Application\CreateRegularUserCommand;
-use Cuadrik\Crm\Users\Application\GetUserQuery;
-use Cuadrik\Crm\Shared\Domain\Model\CompanyId;
-use Cuadrik\Crm\Shared\Domain\Model\UserId;
+use Cuadrik\Backoffice\Users\Application\SignInQuery;
+use Cuadrik\Backoffice\Users\Application\CreateRegularUserCommand;
+use Cuadrik\Backoffice\Users\Application\GetUserQuery;
+use Cuadrik\Shared\Domain\Model\CompanyId;
+use Cuadrik\Shared\Domain\Model\UserId;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Messenger\Transport\InMemoryTransport;
@@ -22,12 +22,12 @@ class RegularUserCreationTest extends KernelTestCase
     protected function setUp()
     {
         self::bootKernel();
-//        $this->commandBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\SyncCommand\CommandBus');
-//        $this->queryBus = self::$container->get('Cuadrik\Crm\Shared\Domain\Bus\Query\QueryBus');
-//        $this->bus = self::$container->get('Cuadrik\Crm\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus.php');
-//        $this->tokenDecoder = self::$container->get('Cuadrik\Crm\Users\Infrastructure\Symfony\Service\JWTDecodeToken');
-        $this->createUserCommandHandler = self::$container->get('Cuadrik\Crm\Users\Application\User\CreateRegularUserCommandHandler');
-        $this->getUserQueryHandler = self::$container->get('Cuadrik\Crm\Users\Application\GetUserQueryHandler');
+//        $this->commandBus = self::$container->get('Cuadrik\Shared\Domain\Bus\SyncCommand\CommandBus');
+//        $this->queryBus = self::$container->get('Cuadrik\Shared\Domain\Bus\Query\QueryBus');
+//        $this->bus = self::$container->get('Cuadrik\Shared\Infrastructure\Symfony\Bus\SymfonyCommandBus.php');
+//        $this->tokenDecoder = self::$container->get('Cuadrik\Backoffice\Users\Infrastructure\Symfony\Service\JWTDecodeToken');
+        $this->createUserCommandHandler = self::$container->get('Cuadrik\Backoffice\Users\Application\User\CreateRegularUserCommandHandler');
+        $this->getUserQueryHandler = self::$container->get('Cuadrik\Backoffice\Users\Application\GetUserQueryHandler');
     }
 
     /**

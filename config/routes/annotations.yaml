@@ -1,5 +1,5 @@
 controllers:
-    resource: ../../apps/crm/api/src/Controller
+    resource: ../../apps/backoffice/api/src/Controller
     type: annotation
 
 kernel:

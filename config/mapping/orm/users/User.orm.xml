@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="Cuadrik\Crm\Users\Domain\User" table="users">
+    <entity name="Cuadrik\Backoffice\Users\Domain\User" table="users">
         <id name="uuid" type="string" column="uuid">
             <generator strategy="NONE"/>
         </id>
@@ -8,7 +8,7 @@
         <embedded name="username" class="Username" use-column-prefix="false" />
         <embedded name="email" class="Email" use-column-prefix="false" />
         <embedded name="password" class="Password" use-column-prefix="false" />
-        <embedded name="token" class="Cuadrik\Crm\Shared\Domain\Model\Token" use-column-prefix="false" />
+        <embedded name="token" class="Cuadrik\Shared\Domain\Model\Token" use-column-prefix="false" />
         <embedded name="firstName" class="FirstName" use-column-prefix="false" />
         <embedded name="lastName" class="LastName" use-column-prefix="false" />
         <embedded name="commercialName" class="CommercialName" use-column-prefix="false" />
@@ -17,9 +17,9 @@
         <embedded name="roles" class="Roles" use-column-prefix="false" />
         <embedded name="termsAccepted" class="TermsAccepted" use-column-prefix="false" />
         <embedded name="photoUrl" class="PhotoUrl" use-column-prefix="false" />
-        <embedded name="companyId" class="Cuadrik\Crm\Shared\Domain\Model\CompanyId" column-prefix="company_"  />
+        <embedded name="companyId" class="Cuadrik\Shared\Domain\Model\CompanyId" column-prefix="company_"  />
 
-<!--        <many-to-one field="company" target-entity="Cuadrik\Crm\Companies\Domain\Company" inversed-by="user">-->
+<!--        <many-to-one field="company" target-entity="Cuadrik\Backoffice\Companies\Domain\Company" inversed-by="user">-->
 <!--            <cascade>-->
 <!--                <cascade-persist/>-->
 <!--            </cascade>-->
